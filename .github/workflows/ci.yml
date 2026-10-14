@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Lint, Format and Verify Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Buf CLI
+        uses: bufbuild/buf-setup-action@v1
+        with:
+          version: "1.50.0"
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+          cache: true
+
+      - name: Verify proto formatting
+        run: buf format -d --exit-code
+
+      - name: Run buf lint
+        run: buf lint
+
+      - name: Regenerate and build Go code
+        run: |
+          rm -rf gen/go
+          buf generate
+          go mod tidy
+          go build ./gen/go/...
+
+      - name: Verify no drift in gen/go
+        run: |
+          if [ -n "$(git status --porcelain gen/go)" ]; then
+            echo "Error: Uncommitted changes or drift detected in gen/go after generation:"
+            git status --porcelain gen/go
+            exit 1
+          fi
+
+      - name: Check breaking changes against main
+        run: |
+          if git rev-parse --verify origin/main > /dev/null 2>&1 && git show origin/main:buf.yaml > /dev/null 2>&1; then
+            echo "Running breaking change check against origin/main..."
+            buf breaking --against ".git#branch=origin/main"
+          else
+            echo "No existing contracts found on origin/main. Skipping breaking change check for initial PR."
+          fi

@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package orbit.auth.v1;
+
+option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1;authv1";
+
+service AuthService {
+  rpc SendCode(SendCodeRequest) returns (SendCodeResponse);
+  rpc VerifyCode(VerifyCodeRequest) returns (VerifyCodeResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
+}
+
+message SendCodeRequest {
+  string email = 1;
+}
+
+message SendCodeResponse {
+  int32 retry_after_seconds = 1;
+}
+
+message VerifyCodeRequest {
+  string email = 1;
+  string code = 2;
+}
+
+message VerifyCodeResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+}
+
+message LogoutResponse {}
