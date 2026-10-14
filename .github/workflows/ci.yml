@@ -43,11 +43,11 @@ jobs:
           go mod tidy
           go build ./gen/go/...
 
-      - name: Verify no drift in gen/go
+      - name: Verify no drift in generated code and dependencies
         run: |
-          if [ -n "$(git status --porcelain gen/go)" ]; then
-            echo "Error: Uncommitted changes or drift detected in gen/go after generation:"
-            git status --porcelain gen/go
+          if [ -n "$(git status --porcelain go.mod go.sum gen/go)" ]; then
+            echo "Error: Uncommitted changes or drift detected in go.mod, go.sum, or gen/go:"
+            git status --porcelain go.mod go.sum gen/go
             exit 1
           fi
 

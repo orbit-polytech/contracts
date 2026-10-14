@@ -1,8 +1,8 @@
-version: "3"
+version: '3'
 
 tasks:
   lint:
-    desc: "Run buf lint"
+    desc: Run buf lint
     cmds:
       - buf lint
 
@@ -33,7 +33,7 @@ tasks:
       - task: lint
       - task: format-check
       - task: generate
-      - cmd: powershell -NoProfile -Command "$diff = git status --porcelain gen/go; if ($diff) { Write-Error 'Drift detected in gen/go'; exit 1 }"
+      - cmd: powershell -NoProfile -Command "if (git status --porcelain go.mod go.sum gen/go) { git status --porcelain go.mod go.sum gen/go; exit 1 }"
         platforms: [windows]
-      - cmd: test -z "$(git status --porcelain gen/go)"
+      - cmd: test -z "$(git status --porcelain go.mod go.sum gen/go)"
         platforms: [linux, darwin]
