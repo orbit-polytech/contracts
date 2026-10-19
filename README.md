@@ -18,7 +18,14 @@
 
 - [Go](https://go.dev/) 1.25+ (в модуле закреплены зависимости gRPC v1.84.0 и Protobuf v1.36.12 для устранения известных CVE)
 - [Buf CLI](https://buf.build/docs/installation) (v1.50+)
+- **Плагины Protobuf для Go** (устанавливаются один раз локально):
+  ```bash
+  go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.5
+  go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+  ```
+  *Убедитесь, что каталог `$GOPATH/bin` (обычно `~/go/bin` на Linux/macOS или `%USERPROFILE%\go\bin` на Windows) добавлен в системную переменную `PATH`.*
 - [Task](https://taskfile.dev/) (опционально, для удобного запуска задач)
+- *Для Windows:* для работы команды `buf format` требуется утилита `diff` (поставляется вместе с Git в каталоге `<GitInstallPath>\usr\bin`, например `F:\Soft\Git\usr\bin` или `C:\Program Files\Git\usr\bin`, который должен быть доступен в `PATH`).
 
 ## Спецификация контрактов
 

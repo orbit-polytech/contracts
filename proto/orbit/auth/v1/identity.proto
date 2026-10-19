@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package orbit.auth.v1;
+
+import "google/protobuf/timestamp.proto";
+import "orbit/auth/v1/oauth.proto";
+
+option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1;authv1";
+
+message LinkedIdentity {
+  string id = 1;
+  OAuthProvider provider = 2;
+  string provider_subject = 3;
+  string email = 4;
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message BeginIdentityLinkRequest {
+  string user_id = 1;
+  OAuthProvider provider = 2;
+  ClientType client_type = 3;
+  string initiator_binding = 4;
+  string reauth_proof = 5;
+}
+
+message BeginIdentityLinkResponse {
+  string authorization_url = 1;
+  string state = 2;
+  string transaction_id = 3;
+  google.protobuf.Timestamp expires_at = 4;
+}
+
+message FinishIdentityLinkRequest {
+  OAuthProvider provider = 1;
+  string code = 2;
+  string state = 3;
+  string initiator_binding = 4;
+}
+
+message FinishIdentityLinkResponse {
+  LinkedIdentity identity = 1;
+}
+
+message ListLinkedIdentitiesRequest {
+  string user_id = 1;
+}
+
+message ListLinkedIdentitiesResponse {
+  repeated LinkedIdentity identities = 1;
+}
+
+message UnlinkIdentityRequest {
+  string user_id = 1;
+  OAuthProvider provider = 2;
+  string reauth_proof = 3;
+}
+
+message UnlinkIdentityResponse {}

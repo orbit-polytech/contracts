@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package orbit.auth.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1;authv1";
+
+enum OAuthProvider {
+  O_AUTH_PROVIDER_UNSPECIFIED = 0;
+  O_AUTH_PROVIDER_GOOGLE = 1;
+}
+
+enum ClientType {
+  CLIENT_TYPE_UNSPECIFIED = 0;
+  CLIENT_TYPE_WEB = 1;
+  CLIENT_TYPE_MOBILE = 2;
+}
+
+message BeginOAuthLoginRequest {
+  OAuthProvider provider = 1;
+  ClientType client_type = 2;
+  string initiator_binding = 3;
+}
+
+message BeginOAuthLoginResponse {
+  string authorization_url = 1;
+  string state = 2;
+  string transaction_id = 3;
+  google.protobuf.Timestamp expires_at = 4;
+}
+
+message FinishOAuthLoginRequest {
+  OAuthProvider provider = 1;
+  string code = 2;
+  string state = 3;
+  string initiator_binding = 4;
+  string client_ip = 5;
+  string user_agent = 6;
+}
+
+message FinishOAuthLoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  google.protobuf.Timestamp access_token_expires_at = 4;
+  google.protobuf.Timestamp refresh_token_expires_at = 5;
+  bool is_new_user = 6;
+  ClientType client_type = 7;
+}

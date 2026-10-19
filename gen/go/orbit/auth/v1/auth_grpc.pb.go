@@ -19,10 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_SendCode_FullMethodName     = "/orbit.auth.v1.AuthService/SendCode"
-	AuthService_VerifyCode_FullMethodName   = "/orbit.auth.v1.AuthService/VerifyCode"
-	AuthService_RefreshToken_FullMethodName = "/orbit.auth.v1.AuthService/RefreshToken"
-	AuthService_Logout_FullMethodName       = "/orbit.auth.v1.AuthService/Logout"
+	AuthService_SendCode_FullMethodName             = "/orbit.auth.v1.AuthService/SendCode"
+	AuthService_VerifyCode_FullMethodName           = "/orbit.auth.v1.AuthService/VerifyCode"
+	AuthService_RefreshToken_FullMethodName         = "/orbit.auth.v1.AuthService/RefreshToken"
+	AuthService_Logout_FullMethodName               = "/orbit.auth.v1.AuthService/Logout"
+	AuthService_BeginOAuthLogin_FullMethodName      = "/orbit.auth.v1.AuthService/BeginOAuthLogin"
+	AuthService_FinishOAuthLogin_FullMethodName     = "/orbit.auth.v1.AuthService/FinishOAuthLogin"
+	AuthService_BeginIdentityLink_FullMethodName    = "/orbit.auth.v1.AuthService/BeginIdentityLink"
+	AuthService_FinishIdentityLink_FullMethodName   = "/orbit.auth.v1.AuthService/FinishIdentityLink"
+	AuthService_ListLinkedIdentities_FullMethodName = "/orbit.auth.v1.AuthService/ListLinkedIdentities"
+	AuthService_UnlinkIdentity_FullMethodName       = "/orbit.auth.v1.AuthService/UnlinkIdentity"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -33,6 +39,12 @@ type AuthServiceClient interface {
 	VerifyCode(ctx context.Context, in *VerifyCodeRequest, opts ...grpc.CallOption) (*VerifyCodeResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
+	BeginOAuthLogin(ctx context.Context, in *BeginOAuthLoginRequest, opts ...grpc.CallOption) (*BeginOAuthLoginResponse, error)
+	FinishOAuthLogin(ctx context.Context, in *FinishOAuthLoginRequest, opts ...grpc.CallOption) (*FinishOAuthLoginResponse, error)
+	BeginIdentityLink(ctx context.Context, in *BeginIdentityLinkRequest, opts ...grpc.CallOption) (*BeginIdentityLinkResponse, error)
+	FinishIdentityLink(ctx context.Context, in *FinishIdentityLinkRequest, opts ...grpc.CallOption) (*FinishIdentityLinkResponse, error)
+	ListLinkedIdentities(ctx context.Context, in *ListLinkedIdentitiesRequest, opts ...grpc.CallOption) (*ListLinkedIdentitiesResponse, error)
+	UnlinkIdentity(ctx context.Context, in *UnlinkIdentityRequest, opts ...grpc.CallOption) (*UnlinkIdentityResponse, error)
 }
 
 type authServiceClient struct {
@@ -83,6 +95,66 @@ func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts 
 	return out, nil
 }
 
+func (c *authServiceClient) BeginOAuthLogin(ctx context.Context, in *BeginOAuthLoginRequest, opts ...grpc.CallOption) (*BeginOAuthLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BeginOAuthLoginResponse)
+	err := c.cc.Invoke(ctx, AuthService_BeginOAuthLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) FinishOAuthLogin(ctx context.Context, in *FinishOAuthLoginRequest, opts ...grpc.CallOption) (*FinishOAuthLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FinishOAuthLoginResponse)
+	err := c.cc.Invoke(ctx, AuthService_FinishOAuthLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) BeginIdentityLink(ctx context.Context, in *BeginIdentityLinkRequest, opts ...grpc.CallOption) (*BeginIdentityLinkResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BeginIdentityLinkResponse)
+	err := c.cc.Invoke(ctx, AuthService_BeginIdentityLink_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) FinishIdentityLink(ctx context.Context, in *FinishIdentityLinkRequest, opts ...grpc.CallOption) (*FinishIdentityLinkResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FinishIdentityLinkResponse)
+	err := c.cc.Invoke(ctx, AuthService_FinishIdentityLink_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ListLinkedIdentities(ctx context.Context, in *ListLinkedIdentitiesRequest, opts ...grpc.CallOption) (*ListLinkedIdentitiesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLinkedIdentitiesResponse)
+	err := c.cc.Invoke(ctx, AuthService_ListLinkedIdentities_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) UnlinkIdentity(ctx context.Context, in *UnlinkIdentityRequest, opts ...grpc.CallOption) (*UnlinkIdentityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UnlinkIdentityResponse)
+	err := c.cc.Invoke(ctx, AuthService_UnlinkIdentity_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -91,6 +163,12 @@ type AuthServiceServer interface {
 	VerifyCode(context.Context, *VerifyCodeRequest) (*VerifyCodeResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
+	BeginOAuthLogin(context.Context, *BeginOAuthLoginRequest) (*BeginOAuthLoginResponse, error)
+	FinishOAuthLogin(context.Context, *FinishOAuthLoginRequest) (*FinishOAuthLoginResponse, error)
+	BeginIdentityLink(context.Context, *BeginIdentityLinkRequest) (*BeginIdentityLinkResponse, error)
+	FinishIdentityLink(context.Context, *FinishIdentityLinkRequest) (*FinishIdentityLinkResponse, error)
+	ListLinkedIdentities(context.Context, *ListLinkedIdentitiesRequest) (*ListLinkedIdentitiesResponse, error)
+	UnlinkIdentity(context.Context, *UnlinkIdentityRequest) (*UnlinkIdentityResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -112,6 +190,24 @@ func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshToke
 }
 func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedAuthServiceServer) BeginOAuthLogin(context.Context, *BeginOAuthLoginRequest) (*BeginOAuthLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BeginOAuthLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) FinishOAuthLogin(context.Context, *FinishOAuthLoginRequest) (*FinishOAuthLoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishOAuthLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) BeginIdentityLink(context.Context, *BeginIdentityLinkRequest) (*BeginIdentityLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BeginIdentityLink not implemented")
+}
+func (UnimplementedAuthServiceServer) FinishIdentityLink(context.Context, *FinishIdentityLinkRequest) (*FinishIdentityLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FinishIdentityLink not implemented")
+}
+func (UnimplementedAuthServiceServer) ListLinkedIdentities(context.Context, *ListLinkedIdentitiesRequest) (*ListLinkedIdentitiesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLinkedIdentities not implemented")
+}
+func (UnimplementedAuthServiceServer) UnlinkIdentity(context.Context, *UnlinkIdentityRequest) (*UnlinkIdentityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnlinkIdentity not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -206,6 +302,114 @@ func _AuthService_Logout_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_BeginOAuthLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BeginOAuthLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).BeginOAuthLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_BeginOAuthLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).BeginOAuthLogin(ctx, req.(*BeginOAuthLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_FinishOAuthLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishOAuthLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).FinishOAuthLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_FinishOAuthLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).FinishOAuthLogin(ctx, req.(*FinishOAuthLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_BeginIdentityLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BeginIdentityLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).BeginIdentityLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_BeginIdentityLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).BeginIdentityLink(ctx, req.(*BeginIdentityLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_FinishIdentityLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FinishIdentityLinkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).FinishIdentityLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_FinishIdentityLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).FinishIdentityLink(ctx, req.(*FinishIdentityLinkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ListLinkedIdentities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLinkedIdentitiesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ListLinkedIdentities(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ListLinkedIdentities_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ListLinkedIdentities(ctx, req.(*ListLinkedIdentitiesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_UnlinkIdentity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnlinkIdentityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).UnlinkIdentity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_UnlinkIdentity_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).UnlinkIdentity(ctx, req.(*UnlinkIdentityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +432,30 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Logout",
 			Handler:    _AuthService_Logout_Handler,
+		},
+		{
+			MethodName: "BeginOAuthLogin",
+			Handler:    _AuthService_BeginOAuthLogin_Handler,
+		},
+		{
+			MethodName: "FinishOAuthLogin",
+			Handler:    _AuthService_FinishOAuthLogin_Handler,
+		},
+		{
+			MethodName: "BeginIdentityLink",
+			Handler:    _AuthService_BeginIdentityLink_Handler,
+		},
+		{
+			MethodName: "FinishIdentityLink",
+			Handler:    _AuthService_FinishIdentityLink_Handler,
+		},
+		{
+			MethodName: "ListLinkedIdentities",
+			Handler:    _AuthService_ListLinkedIdentities_Handler,
+		},
+		{
+			MethodName: "UnlinkIdentity",
+			Handler:    _AuthService_UnlinkIdentity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

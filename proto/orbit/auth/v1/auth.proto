@@ -3,6 +3,8 @@ syntax = "proto3";
 package orbit.auth.v1;
 
 import "google/protobuf/timestamp.proto";
+import "orbit/auth/v1/identity.proto";
+import "orbit/auth/v1/oauth.proto";
 
 option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1;authv1";
 
@@ -11,6 +13,14 @@ service AuthService {
   rpc VerifyCode(VerifyCodeRequest) returns (VerifyCodeResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc Logout(LogoutRequest) returns (LogoutResponse);
+
+  rpc BeginOAuthLogin(BeginOAuthLoginRequest) returns (BeginOAuthLoginResponse);
+  rpc FinishOAuthLogin(FinishOAuthLoginRequest) returns (FinishOAuthLoginResponse);
+
+  rpc BeginIdentityLink(BeginIdentityLinkRequest) returns (BeginIdentityLinkResponse);
+  rpc FinishIdentityLink(FinishIdentityLinkRequest) returns (FinishIdentityLinkResponse);
+  rpc ListLinkedIdentities(ListLinkedIdentitiesRequest) returns (ListLinkedIdentitiesResponse);
+  rpc UnlinkIdentity(UnlinkIdentityRequest) returns (UnlinkIdentityResponse);
 }
 
 message SendCodeRequest {
