@@ -22,8 +22,8 @@ message SearchGroupsResponse {
 
 message GroupItem {
   string title = 1;
-  bool has_schedule = 2;
-  bool is_session = 3;
+  bool has_regular_schedule = 2;
+  bool has_session_schedule = 3;
 }
 
 message GetGroupScheduleRequest {
@@ -37,6 +37,7 @@ message GetGroupScheduleResponse {
   int32 evening_type = 2;
   ScheduleMetadata metadata = 3;
   repeated DaySchedule days = 4;
+  string time_zone = 5;
 }
 
 message ScheduleMetadata {
