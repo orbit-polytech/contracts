@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package orbit.schedule.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/schedule/v1;schedulev1";
+
+service ScheduleService {
+  rpc SearchGroups(SearchGroupsRequest) returns (SearchGroupsResponse);
+  rpc GetGroupSchedule(GetGroupScheduleRequest) returns (GetGroupScheduleResponse);
+}
+
+message SearchGroupsRequest {
+  string query = 1;
+  int32 limit = 2;
+}
+
+message SearchGroupsResponse {
+  repeated GroupItem groups = 1;
+}
+
+message GroupItem {
+  string title = 1;
+  bool has_schedule = 2;
+  bool is_session = 3;
+}
+
+message GetGroupScheduleRequest {
+  string group_title = 1;
+  string date_from = 2;
+  string date_to = 3;
+}
+
+message GetGroupScheduleResponse {
+  string group_title = 1;
+  int32 evening_type = 2;
+  ScheduleMetadata metadata = 3;
+  repeated DaySchedule days = 4;
+}
+
+message ScheduleMetadata {
+  google.protobuf.Timestamp last_checked_at = 1;
+  google.protobuf.Timestamp last_updated_at = 2;
+  bool is_stale = 3;
+}
+
+message DaySchedule {
+  string date = 1;
+  int32 day_of_week = 2;
+  repeated Lesson lessons = 3;
+}
+
+message Lesson {
+  string subject = 1;
+  string type = 2;
+  int32 slot_number = 3;
+  string start_time = 4;
+  string end_time = 5;
+  string location = 6;
+  repeated Auditorium auditoriums = 7;
+  repeated Teacher teachers = 8;
+  string e_link = 9;
+  string week = 10;
+}
+
+message Auditorium {
+  string name = 1;
+  string web_url = 2;
+  string color = 3;
+}
+
+message Teacher {
+  int32 id = 1;
+  string name = 2;
+}
