@@ -38,6 +38,8 @@ message GetGroupScheduleResponse {
   ScheduleMetadata metadata = 3;
   repeated DaySchedule days = 4;
   string time_zone = 5;
+  string date_from = 6;
+  string date_to = 7;
 }
 
 message ScheduleMetadata {
