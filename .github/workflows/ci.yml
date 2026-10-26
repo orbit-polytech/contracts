@@ -36,18 +36,18 @@ jobs:
       - name: Run buf lint
         run: buf lint
 
-      - name: Regenerate and build Go code
+      - name: Regenerate and build code
         run: |
-          rm -rf gen/go
+          rm -rf gen/go gen/python
           buf generate
           go mod tidy
           go build ./gen/go/...
 
       - name: Verify no drift in generated code and dependencies
         run: |
-          if [ -n "$(git status --porcelain go.mod go.sum gen/go)" ]; then
-            echo "Error: Uncommitted changes or drift detected in go.mod, go.sum, or gen/go:"
-            git status --porcelain go.mod go.sum gen/go
+          if [ -n "$(git status --porcelain go.mod go.sum gen/go gen/python)" ]; then
+            echo "Error: Uncommitted changes or drift detected in go.mod, go.sum, gen/go, or gen/python:"
+            git status --porcelain go.mod go.sum gen/go gen/python
             exit 1
           fi
 

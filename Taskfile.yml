@@ -1,39 +1,45 @@
-version: '3'
+version: "3"
 
 tasks:
-  lint:
-    desc: Run buf lint
-    cmds:
-      - buf lint
+    lint:
+        desc: Run buf lint
+        cmds:
+            - buf lint
 
-  format:
-    desc: Format proto files with buf
-    cmds:
-      - buf format -w
+    format:
+        desc: Format proto files with buf
+        cmds:
+            - cmd: powershell -NoProfile -Command "Set-Item env:Path ('F:\Soft\Git\usr\bin;' + (Get-Item env:Path).Value); buf format -w"
+              platforms: [windows]
+            - cmd: buf format -w
+              platforms: [linux, darwin]
 
-  format-check:
-    desc: Verify proto formatting
-    cmds:
-      - buf format -d --exit-code
+    format-check:
+        desc: Verify proto formatting
+        cmds:
+            - cmd: powershell -NoProfile -Command "Set-Item env:Path ('F:\Soft\Git\usr\bin;' + (Get-Item env:Path).Value); buf format -d --exit-code"
+              platforms: [windows]
+            - cmd: buf format -d --exit-code
+              platforms: [linux, darwin]
 
-  generate:
-    desc: Generate Go code from protobuf files
-    cmds:
-      - cmd: powershell -NoProfile -Command "if (Test-Path gen/go) { Remove-Item -Recurse -Force gen/go }"
-        platforms: [windows]
-      - cmd: rm -rf gen/go
-        platforms: [linux, darwin]
-      - buf generate
-      - go mod tidy
-      - go build ./gen/go/...
+    generate:
+        desc: Generate Go and Python code from protobuf files
+        cmds:
+            - cmd: powershell -NoProfile -Command "if (Test-Path gen/go) { Remove-Item -Recurse -Force gen/go }; if (Test-Path gen/python) { Remove-Item -Recurse -Force gen/python }"
+              platforms: [windows]
+            - cmd: rm -rf gen/go gen/python
+              platforms: [linux, darwin]
+            - buf generate
+            - go mod tidy
+            - go build ./gen/go/...
 
-  check:
-    desc: Run all verifications (lint, format-check, generate, and drift check)
-    cmds:
-      - task: lint
-      - task: format-check
-      - task: generate
-      - cmd: powershell -NoProfile -Command "if (git status --porcelain go.mod go.sum gen/go) { git status --porcelain go.mod go.sum gen/go; exit 1 }"
-        platforms: [windows]
-      - cmd: test -z "$(git status --porcelain go.mod go.sum gen/go)"
-        platforms: [linux, darwin]
+    check:
+        desc: Run all verifications (lint, format-check, generate, and drift check)
+        cmds:
+            - task: lint
+            - task: format-check
+            - task: generate
+            - cmd: powershell -NoProfile -Command "if (git status --porcelain go.mod go.sum gen/go gen/python) { git status --porcelain go.mod go.sum gen/go gen/python; exit 1 }"
+              platforms: [windows]
+            - cmd: test -z "$(git status --porcelain go.mod go.sum gen/go gen/python)"
+              platforms: [linux, darwin]

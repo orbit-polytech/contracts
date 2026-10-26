@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package orbit.ai.v1;
+
+option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1;aiv1";
+
+service AIService {
+  rpc ChatStream(ChatStreamRequest) returns (stream ChatStreamResponse);
+  rpc CancelGeneration(CancelGenerationRequest) returns (CancelGenerationResponse);
+}
+
+message StudentContext {
+  string group_title = 1;
+  string faculty = 2;
+  int32 course = 3;
+}
+
+message SourceCitation {
+  string document_title = 1;
+  string section = 2;
+  string url = 3;
+  float relevance_score = 4;
+  string excerpt = 5;
+}
+
+enum ChunkStage {
+  CHUNK_STAGE_UNSPECIFIED = 0;
+  CHUNK_STAGE_START = 1;
+  CHUNK_STAGE_DELTA = 2;
+  CHUNK_STAGE_CITATIONS = 3;
+  CHUNK_STAGE_DONE = 4;
+  CHUNK_STAGE_ERROR = 5;
+}
+
+message ChatStreamRequest {
+  string conversation_id = 1;
+  string message_id = 2;
+  string query = 3;
+  StudentContext context = 4;
+}
+
+message ChatStreamResponse {
+  ChunkStage stage = 1;
+  string delta_text = 2;
+  repeated SourceCitation citations = 3;
+  string error_message = 4;
+  int32 error_code = 5;
+  string conversation_id = 6;
+  string message_id = 7;
+}
+
+message CancelGenerationRequest {
+  string conversation_id = 1;
+  string message_id = 2;
+}
+
+message CancelGenerationResponse {
+  bool cancelled = 1;
+}
