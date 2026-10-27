@@ -40,7 +40,7 @@
 - [Python](https://www.python.org/) 3.12+ или менеджер пакетов [uv](https://docs.astral.sh/uv/)
 - **Закреплённые runtime-зависимости:**
   ```bash
-  pip install "protobuf>=5.28,<6" "grpcio>=1.68,<2"
+  pip install "protobuf>=5.29.3,<6" "grpcio>=1.68.0,<2"
   ```
 
 ### Особенности Windows
@@ -99,21 +99,30 @@ git status --porcelain go.mod go.sum gen/go gen/python
 
 ---
 
-## Проверка Python-модулей (Smoke Test)
+## Проверка Python-пакета (Smoke Test)
 
-Для быстрой проверки корректности импортов и сериализации сообщений всех сгенерированных пакетов:
+Репозиторий оформлен как устанавливаемый Python-пакет `orbit-contracts` (корневой `pyproject.toml` экспортирует пространство имён `gen/python/orbit`).
+
+Для локальной проверки пакета:
 
 ```bash
+# Установка зависимостей и самого пакета
+pip install "protobuf>=5.29.3,<6" "grpcio>=1.68.0,<2"
+pip install -e .
+
+# Проверка импорта всех сгенерированных модулей
 python -c "
-import sys
-sys.path.insert(0, 'gen/python')
 from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
 from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
 from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
 
-req = ai_pb2.ChatStreamRequest(query='Тест')
+req = ai_pb2.ChatStreamRequest(
+    conversation_id='test-conv',
+    message_id='00000000-0000-0000-0000-000000000001',
+    query='Тест'
+)
 assert req.query == 'Тест'
-print('Все Python-пакеты успешно проверены')
+print('Пакет orbit-contracts успешно собран и проверен')
 "
 ```
 
@@ -139,19 +148,26 @@ import (
 
 ### В Python-сервисы (`ai-service`)
 
-В локальной разработке монорепозитория/полирепозитория пакет подключается через `pyproject.toml` микросервиса:
+В `pyproject.toml` сервиса `ai-service` пакет подключается как локальная зависимость:
 
 ```toml
+[project]
+dependencies = [
+    "orbit-contracts",
+    # ...
+]
+
 [tool.uv.sources]
-orbit-contracts = { path = "../contracts/gen/python", editable = true }
+orbit-contracts = { path = "../contracts", editable = true }
 ```
 
-Либо через прямое добавление пути в виртуальное окружение:
+Либо классической установкой через pip в виртуальное окружение сервиса:
 ```bash
-pip install -e ../contracts/gen/python
+pip install -e ../contracts
 ```
 
-Импорт в коде сервиса:
+Импорт в Python-коде:
 ```python
 from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
+from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
 ```

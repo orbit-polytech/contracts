@@ -1,5 +1,7 @@
 # Binaries and build artifacts
 bin/
+dist/
+*.egg-info/
 *.exe
 *.exe~
 *.dll

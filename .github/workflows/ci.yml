@@ -35,9 +35,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python dependencies
-        run: pip install "protobuf>=5.28,<6" "grpcio>=1.68,<2"
-
       - name: Verify proto formatting
         run: buf format -d --exit-code
 
@@ -59,11 +56,11 @@ jobs:
             exit 1
           fi
 
-      - name: Python smoke test
+      - name: Install and verify Python package
         run: |
+          pip install "protobuf>=5.29.3,<6" "grpcio>=1.68,<2"
+          pip install .
           python -c "
-          import sys
-          sys.path.insert(0, 'gen/python')
           from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
           from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
           from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
@@ -79,7 +76,7 @@ jobs:
           parsed.ParseFromString(data)
           assert parsed.query == 'Тест расписания'
           assert parsed.context.group_title == '241-321'
-          print('Python protobuf and gRPC modules verified successfully')
+          print('orbit-contracts package verified successfully')
           "
 
       - name: Check breaking changes against main
