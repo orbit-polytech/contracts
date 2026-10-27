@@ -1,11 +1,8 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from collections.abc import Mapping as _Mapping
-from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -45,7 +42,7 @@ class BeginOAuthLoginResponse(_message.Message):
     state: str
     transaction_id: str
     expires_at: _timestamp_pb2.Timestamp
-    def __init__(self, authorization_url: _Optional[str] = ..., state: _Optional[str] = ..., transaction_id: _Optional[str] = ..., expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, authorization_url: _Optional[str] = ..., state: _Optional[str] = ..., transaction_id: _Optional[str] = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class FinishOAuthLoginRequest(_message.Message):
     __slots__ = ("provider", "code", "state", "initiator_binding", "client_ip", "user_agent")
@@ -79,4 +76,4 @@ class FinishOAuthLoginResponse(_message.Message):
     refresh_token_expires_at: _timestamp_pb2.Timestamp
     is_new_user: bool
     client_type: ClientType
-    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., user_id: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., is_new_user: _Optional[bool] = ..., client_type: _Optional[_Union[ClientType, str]] = ...) -> None: ...
+    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., user_id: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_new_user: bool = ..., client_type: _Optional[_Union[ClientType, str]] = ...) -> None: ...
