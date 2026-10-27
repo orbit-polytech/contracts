@@ -23,6 +23,7 @@ jobs:
         uses: bufbuild/buf-setup-action@v1
         with:
           version: "1.50.0"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -45,6 +46,8 @@ jobs:
         run: |
           rm -rf gen/go gen/python
           buf generate
+          echo "# Marker file for PEP 561." > gen/python/orbit/py.typed
+          echo "# Marker file for PEP 561." > gen/python/orbit/ai/v1/py.typed
           go mod tidy
           go build ./gen/go/...
 
