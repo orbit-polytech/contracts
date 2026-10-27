@@ -23,3 +23,9 @@ coverage.txt
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/

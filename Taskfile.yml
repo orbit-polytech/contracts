@@ -9,18 +9,12 @@ tasks:
     format:
         desc: Format proto files with buf
         cmds:
-            - cmd: powershell -NoProfile -Command "Set-Item env:Path ('F:\Soft\Git\usr\bin;' + (Get-Item env:Path).Value); buf format -w"
-              platforms: [windows]
-            - cmd: buf format -w
-              platforms: [linux, darwin]
+            - buf format -w
 
     format-check:
         desc: Verify proto formatting
         cmds:
-            - cmd: powershell -NoProfile -Command "Set-Item env:Path ('F:\Soft\Git\usr\bin;' + (Get-Item env:Path).Value); buf format -d --exit-code"
-              platforms: [windows]
-            - cmd: buf format -d --exit-code
-              platforms: [linux, darwin]
+            - buf format -d --exit-code
 
     generate:
         desc: Generate Go and Python code from protobuf files

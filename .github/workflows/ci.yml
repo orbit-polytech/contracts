@@ -30,6 +30,14 @@ jobs:
           go-version: "1.25"
           cache: true
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install "protobuf>=5.28,<6" "grpcio>=1.68,<2"
+
       - name: Verify proto formatting
         run: buf format -d --exit-code
 
@@ -50,6 +58,29 @@ jobs:
             git status --porcelain go.mod go.sum gen/go gen/python
             exit 1
           fi
+
+      - name: Python smoke test
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, 'gen/python')
+          from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
+          from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
+          from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
+
+          req = ai_pb2.ChatStreamRequest(
+              conversation_id='conv-1',
+              message_id='msg-1',
+              query='Тест расписания',
+              context=ai_pb2.StudentContext(group_title='241-321', faculty='ФИТ', course=2)
+          )
+          data = req.SerializeToString()
+          parsed = ai_pb2.ChatStreamRequest()
+          parsed.ParseFromString(data)
+          assert parsed.query == 'Тест расписания'
+          assert parsed.context.group_title == '241-321'
+          print('Python protobuf and gRPC modules verified successfully')
+          "
 
       - name: Check breaking changes against main
         run: |
