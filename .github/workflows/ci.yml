@@ -66,8 +66,8 @@ jobs:
           from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
 
           req = ai_pb2.ChatStreamRequest(
-              conversation_id='conv-1',
-              message_id='msg-1',
+              conversation_id='a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+              message_id='f47ac10b-58cc-4372-a567-0e02b2c3d479',
               query='Тест расписания',
               context=ai_pb2.StudentContext(group_title='241-321', faculty='ФИТ', course=2)
           )

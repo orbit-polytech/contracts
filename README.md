@@ -78,7 +78,32 @@ task generate
 task check
 ```
 
-### Прямые команды без Task (PowerShell / Bash)
+### Прямые команды без Task
+
+#### PowerShell (Windows)
+
+```powershell
+# Линтинг
+buf lint
+
+# Форматирование proto-файлов
+buf format -w
+
+# Чистая генерация Go и Python
+if (Test-Path gen/go) { Remove-Item -Recurse -Force gen/go }
+if (Test-Path gen/python) { Remove-Item -Recurse -Force gen/python }
+buf generate
+go mod tidy
+go build ./gen/go/...
+
+# Проверка отсутствия расхождений (drift check)
+if (git status --porcelain go.mod go.sum gen/go gen/python) {
+    Write-Error "Обнаружены незакоммиченные расхождения в go.mod, go.sum, gen/go или gen/python!"
+    exit 1
+}
+```
+
+#### Bash / Git Bash (Linux / macOS / Windows)
 
 ```bash
 # Линтинг
@@ -117,8 +142,8 @@ from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
 from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
 
 req = ai_pb2.ChatStreamRequest(
-    conversation_id='test-conv',
-    message_id='00000000-0000-0000-0000-000000000001',
+    conversation_id='a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+    message_id='f47ac10b-58cc-4372-a567-0e02b2c3d479',
     query='Тест'
 )
 assert req.query == 'Тест'
