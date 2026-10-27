@@ -1,12 +1,9 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from collections.abc import Iterable as _Iterable, Mapping as _Mapping
-from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -41,7 +38,7 @@ class GroupItem(_message.Message):
     title: str
     has_regular_schedule: bool
     has_session_schedule: bool
-    def __init__(self, title: _Optional[str] = ..., has_regular_schedule: _Optional[bool] = ..., has_session_schedule: _Optional[bool] = ...) -> None: ...
+    def __init__(self, title: _Optional[str] = ..., has_regular_schedule: bool = ..., has_session_schedule: bool = ...) -> None: ...
 
 class GetGroupScheduleRequest(_message.Message):
     __slots__ = ("group_title", "date_from", "date_to")
@@ -85,7 +82,7 @@ class ScheduleMetadata(_message.Message):
     status: ScheduleStatus
     published_from: str
     published_to: str
-    def __init__(self, last_checked_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., last_updated_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., is_stale: _Optional[bool] = ..., status: _Optional[_Union[ScheduleStatus, str]] = ..., published_from: _Optional[str] = ..., published_to: _Optional[str] = ...) -> None: ...
+    def __init__(self, last_checked_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., last_updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_stale: bool = ..., status: _Optional[_Union[ScheduleStatus, str]] = ..., published_from: _Optional[str] = ..., published_to: _Optional[str] = ...) -> None: ...
 
 class DaySchedule(_message.Message):
     __slots__ = ("date", "day_of_week", "lessons")

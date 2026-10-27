@@ -12,3 +12,5 @@ plugins:
     out: gen/python
   - remote: buf.build/grpc/python:v1.70.0
     out: gen/python
+  - remote: buf.build/protocolbuffers/pyi:v29.3
+    out: gen/python

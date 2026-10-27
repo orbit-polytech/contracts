@@ -1,12 +1,9 @@
-import datetime
-
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from orbit.auth.v1 import identity_pb2 as _identity_pb2
 from orbit.auth.v1 import oauth_pb2 as _oauth_pb2
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from collections.abc import Mapping as _Mapping
-from typing import ClassVar as _ClassVar, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -50,7 +47,7 @@ class VerifyCodeResponse(_message.Message):
     access_token_expires_at: _timestamp_pb2.Timestamp
     refresh_token_expires_at: _timestamp_pb2.Timestamp
     is_new_user: bool
-    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., user_id: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., is_new_user: _Optional[bool] = ...) -> None: ...
+    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., user_id: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_new_user: bool = ...) -> None: ...
 
 class RefreshTokenRequest(_message.Message):
     __slots__ = ("refresh_token", "client_ip", "user_agent")
@@ -72,7 +69,7 @@ class RefreshTokenResponse(_message.Message):
     refresh_token: str
     access_token_expires_at: _timestamp_pb2.Timestamp
     refresh_token_expires_at: _timestamp_pb2.Timestamp
-    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[datetime.datetime, _timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., access_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., refresh_token_expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class LogoutRequest(_message.Message):
     __slots__ = ("refresh_token",)
