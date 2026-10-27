@@ -30,26 +30,54 @@ jobs:
           go-version: "1.25"
           cache: true
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Verify proto formatting
         run: buf format -d --exit-code
 
       - name: Run buf lint
         run: buf lint
 
-      - name: Regenerate and build Go code
+      - name: Regenerate and build code
         run: |
-          rm -rf gen/go
+          rm -rf gen/go gen/python
           buf generate
           go mod tidy
           go build ./gen/go/...
 
       - name: Verify no drift in generated code and dependencies
         run: |
-          if [ -n "$(git status --porcelain go.mod go.sum gen/go)" ]; then
-            echo "Error: Uncommitted changes or drift detected in go.mod, go.sum, or gen/go:"
-            git status --porcelain go.mod go.sum gen/go
+          if [ -n "$(git status --porcelain go.mod go.sum gen/go gen/python)" ]; then
+            echo "Error: Uncommitted changes or drift detected in go.mod, go.sum, gen/go, or gen/python:"
+            git status --porcelain go.mod go.sum gen/go gen/python
             exit 1
           fi
+
+      - name: Install and verify Python package
+        run: |
+          pip install "protobuf>=5.29.3,<6" "grpcio>=1.68,<2"
+          pip install .
+          python -c "
+          from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
+          from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
+          from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
+
+          req = ai_pb2.ChatStreamRequest(
+              conversation_id='a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+              message_id='f47ac10b-58cc-4372-a567-0e02b2c3d479',
+              query='Тест расписания',
+              context=ai_pb2.StudentContext(group_title='241-321', faculty='ФИТ', course=2)
+          )
+          data = req.SerializeToString()
+          parsed = ai_pb2.ChatStreamRequest()
+          parsed.ParseFromString(data)
+          assert parsed.query == 'Тест расписания'
+          assert parsed.context.group_title == '241-321'
+          print('orbit-contracts package verified successfully')
+          "
 
       - name: Check breaking changes against main
         run: |

@@ -1,36 +1,61 @@
 # Orbit Polytech Contracts
 
-Центральный репозиторий Protobuf-контрактов и сгенерированных gRPC-клиентов для микросервисной экосистемы **Orbit AI** (Московский Политех).
+Центральный репозиторий Protobuf-контрактов и сгенерированных gRPC-клиентов для микросервисной экосистемы **Orbit Polytech** (Московский Политех).
 
 ## Структура репозитория
 
-- `proto/` — исходные `.proto` файлы контрактов API сервисов.
-  - `proto/orbit/auth/v1/auth.proto` — контракт сервиса аутентификации (`AuthService`).
+- `proto/` — исходные `.proto` файлы контрактов API сервисов:
+  - `proto/orbit/auth/v1/auth.proto` — сервис аутентификации (`AuthService`).
+  - `proto/orbit/schedule/v1/schedule.proto` — сервис расписания занятий (`ScheduleService`).
+  - `proto/orbit/ai/v1/ai.proto` — сервис искусственного интеллекта и стриминга ответов (`AIService`).
 - `gen/go/` — сгенерированный Go-код (Protobuf-структуры и gRPC клиенты/серверы).
-- `docs/` — подробные инженерные спецификации и правила взаимодействия сервисов.
-  - [`docs/auth-v1.md`](docs/auth-v1.md) — полная спецификация `AuthService` (поведение методов, ротация токенов, модель сессий и коды ошибок).
-- `buf.yaml` — конфигурация Buf CLI с версией спецификации `version: v2` (правила линтинга `STANDARD` и детекция breaking changes категории `FILE`).
-- `buf.gen.yaml` — шаблон кодогенерации Go через удалённые плагины Buf с закреплёнными версиями.
+- `gen/python/` — сгенерированный Python-код (Protobuf-сообщения и gRPC stubs).
+- `docs/` — подробные инженерные спецификации и правила взаимодействия сервисов:
+  - [`docs/auth-v1.md`](docs/auth-v1.md) — спецификация `AuthService` (сессии, ротация токенов, OTP, коды ошибок).
+  - [`docs/schedule-v1.md`](docs/schedule-v1.md) — спецификация `ScheduleService` (кэширование, Stale-While-Revalidate, инварианты дат).
+  - [`docs/ai-v1.md`](docs/ai-v1.md) — спецификация `AIService` (жизненный цикл стриминга, стадии, идемпотентность, отмена генерации).
+- `buf.yaml` — конфигурация Buf CLI (`version: v2`, стандарты линтинга `STANDARD`, контроль breaking changes).
+- `buf.gen.yaml` — конфигурация кодогенерации Go и Python через закреплённые удалённые плагины Buf.
 - `Taskfile.yml` — кроссплатформенные команды автоматизации проверок и генерации.
-- `.github/workflows/ci.yml` — конвейер непрерывной интеграции (CI).
+- `.github/workflows/ci.yml` — конвейер непрерывной интеграции (CI) с проверками Go и Python.
+
+---
 
 ## Требования для разработки
 
-- [Go](https://go.dev/) 1.25+ (в модуле закреплены зависимости gRPC v1.84.0 и Protobuf v1.36.12 для устранения известных CVE)
+### Общие
 - [Buf CLI](https://buf.build/docs/installation) (v1.50+)
-- **Плагины Protobuf для Go** (устанавливаются один раз локально):
+- [Git](https://git-scm.com/)
+
+### Для сборки Go
+- [Go](https://go.dev/) 1.25+
+- **Плагины Protobuf для Go** (устанавливаются один раз):
   ```bash
   go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.5
   go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
   ```
-  *Убедитесь, что каталог `$GOPATH/bin` (обычно `~/go/bin` на Linux/macOS или `%USERPROFILE%\go\bin` на Windows) добавлен в системную переменную `PATH`.*
-- [Task](https://taskfile.dev/) (опционально, для удобного запуска задач)
-- *Для Windows:* для работы команды `buf format` требуется утилита `diff` (поставляется вместе с Git в каталоге `<GitInstallPath>\usr\bin`, например `F:\Soft\Git\usr\bin` или `C:\Program Files\Git\usr\bin`, который должен быть доступен в `PATH`).
+  *Убедитесь, что каталог `$GOPATH/bin` добавлен в системную переменную `PATH`.*
 
-## Спецификация контрактов
+### Для проверки и запуска Python
+- [Python](https://www.python.org/) 3.12+ или менеджер пакетов [uv](https://docs.astral.sh/uv/)
+- **Закреплённые runtime-зависимости:**
+  ```bash
+  pip install "protobuf>=5.29.3,<6" "grpcio>=1.68.0,<2"
+  ```
 
-Полное описание семантики методов, жизненного цикла OTP-кодов, ротации токенов (Token Family Rotation), идемпотентности и таблицы кодов ошибок gRPC вынесено в отдельный документ:
-👉 **[Спецификация AuthService v1](docs/auth-v1.md)**
+### Особенности Windows
+Для выполнения команды `buf format -d` (проверка форматирования без перезаписи) требуется стандартная утилита `diff`. На Windows она устанавливается вместе с Git и находится в каталоге `<GitInstallPath>\usr\bin` (например, `C:\Program Files\Git\usr\bin` или пользовательский путь установки Git). Этот путь должен быть добавлен в системную переменную `PATH`.
+
+---
+
+## Инженерные спецификации сервисов
+
+Подробное описание семантики методов, жизненного цикла запросов, идемпотентности и кодов ошибок:
+- 👉 [Спецификация AuthService v1](docs/auth-v1.md)
+- 👉 [Спецификация ScheduleService v1](docs/schedule-v1.md)
+- 👉 [Спецификация AIService v1](docs/ai-v1.md)
+
+---
 
 ## Локальная разработка
 
@@ -46,50 +71,128 @@ task format-check
 # Автоматическое форматирование proto-файлов
 task format
 
-# Генерация Go-кода и проверка сборки
+# Генерация кода для Go и Python с последующей верификацией сборки Go
 task generate
 
 # Полная проверка перед коммитом (lint + format + generate + drift check)
 task check
 ```
 
-### Прямые команды без Task (PowerShell / Windows)
+### Прямые команды без Task
+
+#### PowerShell (Windows)
 
 ```powershell
 # Линтинг
 buf lint
 
-# Форматирование
+# Форматирование proto-файлов
 buf format -w
 
-# Чистая генерация Go-кода и сборка
+# Чистая генерация Go и Python
 if (Test-Path gen/go) { Remove-Item -Recurse -Force gen/go }
+if (Test-Path gen/python) { Remove-Item -Recurse -Force gen/python }
 buf generate
 go mod tidy
 go build ./gen/go/...
 
 # Проверка отсутствия расхождений (drift check)
-if (git status --porcelain go.mod go.sum gen/go) {
-    Write-Error "Обнаружены незакоммиченные расхождения в go.mod, go.sum или gen/go!"
+if (git status --porcelain go.mod go.sum gen/go gen/python) {
+    Write-Error "Обнаружены незакоммиченные расхождения в go.mod, go.sum, gen/go или gen/python!"
     exit 1
 }
 ```
 
-## Проверка обратной совместимости (Breaking Changes)
+#### Bash / Git Bash (Linux / macOS / Windows)
 
-В CI настроена автоматическая проверка совместимости `buf breaking`. 
-При первой инициализации репозитория (первый PR) проверка автоматически пропускается, так как в ветке `main` ещё нет схемы для сравнения. Во всех последующих PR будет строго контролироваться обратная совместимость API.
+```bash
+# Линтинг
+buf lint
 
-## Подключение в Go-сервисы
+# Форматирование proto-файлов
+buf format -w
 
-Для использования контрактов в микросервисах экосистемы:
+# Чистая генерация Go и Python
+rm -rf gen/go gen/python
+buf generate
+go mod tidy
+go build ./gen/go/...
 
+# Проверка отсутствия расхождений (drift check)
+git status --porcelain go.mod go.sum gen/go gen/python
+```
+
+---
+
+## Проверка Python-пакета (Smoke Test)
+
+Репозиторий оформлен как устанавливаемый Python-пакет `orbit-contracts` (корневой `pyproject.toml` экспортирует пространство имён `gen/python/orbit`).
+
+Для локальной проверки пакета:
+
+```bash
+# Установка зависимостей и самого пакета
+pip install "protobuf>=5.29.3,<6" "grpcio>=1.68.0,<2"
+pip install -e .
+
+# Проверка импорта всех сгенерированных модулей
+python -c "
+from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
+from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
+from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
+
+req = ai_pb2.ChatStreamRequest(
+    conversation_id='a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
+    message_id='f47ac10b-58cc-4372-a567-0e02b2c3d479',
+    query='Тест'
+)
+assert req.query == 'Тест'
+print('Пакет orbit-contracts успешно собран и проверен')
+"
+```
+
+---
+
+## Подключение контрактов в микросервисы
+
+### В Go-сервисы (`auth-service`, `schedule-service`, `gateway-service`)
+
+Установка модуля:
 ```bash
 go get github.com/orbit-polytech/contracts
 ```
 
-Импорт пакета в Go-коде:
-
+Импорт в Go-коде:
 ```go
-import authv1 "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1"
+import (
+    authv1 "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1"
+    schedulev1 "github.com/orbit-polytech/contracts/gen/go/orbit/schedule/v1"
+    aiv1 "github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1"
+)
+```
+
+### В Python-сервисы (`ai-service`)
+
+В `pyproject.toml` сервиса `ai-service` пакет подключается как локальная зависимость:
+
+```toml
+[project]
+dependencies = [
+    "orbit-contracts",
+    # ...
+]
+
+[tool.uv.sources]
+orbit-contracts = { path = "../contracts", editable = true }
+```
+
+Либо классической установкой через pip в виртуальное окружение сервиса:
+```bash
+pip install -e ../contracts
+```
+
+Импорт в Python-коде:
+```python
+from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
+from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
 ```
