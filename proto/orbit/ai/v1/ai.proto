@@ -37,6 +37,7 @@ message ChatStreamRequest {
   string message_id = 2;
   string query = 3;
   StudentContext context = 4;
+  string model = 5;
 }
 
 message ChatStreamResponse {

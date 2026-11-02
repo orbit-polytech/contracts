@@ -46,16 +46,18 @@ class SourceCitation(_message.Message):
     def __init__(self, document_title: _Optional[str] = ..., section: _Optional[str] = ..., url: _Optional[str] = ..., relevance_score: _Optional[float] = ..., excerpt: _Optional[str] = ...) -> None: ...
 
 class ChatStreamRequest(_message.Message):
-    __slots__ = ("conversation_id", "message_id", "query", "context")
+    __slots__ = ("conversation_id", "message_id", "query", "context", "model")
     CONVERSATION_ID_FIELD_NUMBER: _ClassVar[int]
     MESSAGE_ID_FIELD_NUMBER: _ClassVar[int]
     QUERY_FIELD_NUMBER: _ClassVar[int]
     CONTEXT_FIELD_NUMBER: _ClassVar[int]
+    MODEL_FIELD_NUMBER: _ClassVar[int]
     conversation_id: str
     message_id: str
     query: str
     context: StudentContext
-    def __init__(self, conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., query: _Optional[str] = ..., context: _Optional[_Union[StudentContext, _Mapping]] = ...) -> None: ...
+    model: str
+    def __init__(self, conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., query: _Optional[str] = ..., context: _Optional[_Union[StudentContext, _Mapping]] = ..., model: _Optional[str] = ...) -> None: ...
 
 class ChatStreamResponse(_message.Message):
     __slots__ = ("stage", "delta_text", "citations", "error_message", "error_code", "conversation_id", "message_id")

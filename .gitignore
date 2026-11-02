@@ -32,3 +32,8 @@ __pycache__/
 *$py.class
 .venv/
 uv.lock
+
+# Superpowers specs, plans, and artifacts
+docs/superpowers/
+.superpowers/
+**/superpowers/
