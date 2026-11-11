@@ -95,4 +95,3 @@ message UpdateAccountPreferencesResponse {
   string primary_group = 3;
   repeated string favorite_groups = 4;
 }
-
