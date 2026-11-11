@@ -101,14 +101,18 @@ class GetAccountResponse(_message.Message):
     def __init__(self, user_id: _Optional[str] = ..., email: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class UpdateAccountPreferencesRequest(_message.Message):
-    __slots__ = ("user_id", "primary_group", "favorite_groups")
+    __slots__ = ("user_id", "primary_group", "favorite_groups", "update_primary_group", "update_favorite_groups")
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
     FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
+    UPDATE_PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
+    UPDATE_FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
     user_id: str
     primary_group: str
     favorite_groups: _containers.RepeatedScalarFieldContainer[str]
-    def __init__(self, user_id: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
+    update_primary_group: bool
+    update_favorite_groups: bool
+    def __init__(self, user_id: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ..., update_primary_group: bool = ..., update_favorite_groups: bool = ...) -> None: ...
 
 class UpdateAccountPreferencesResponse(_message.Message):
     __slots__ = ("user_id", "email", "primary_group", "favorite_groups")

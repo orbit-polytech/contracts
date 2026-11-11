@@ -85,6 +85,8 @@ message UpdateAccountPreferencesRequest {
   string user_id = 1;
   optional string primary_group = 2;
   repeated string favorite_groups = 3;
+  bool update_primary_group = 4;
+  bool update_favorite_groups = 5;
 }
 
 message UpdateAccountPreferencesResponse {
