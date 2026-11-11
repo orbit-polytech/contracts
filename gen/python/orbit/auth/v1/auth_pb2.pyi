@@ -1,9 +1,10 @@
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
 from orbit.auth.v1 import identity_pb2 as _identity_pb2
 from orbit.auth.v1 import oauth_pb2 as _oauth_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -80,3 +81,43 @@ class LogoutRequest(_message.Message):
 class LogoutResponse(_message.Message):
     __slots__ = ()
     def __init__(self) -> None: ...
+
+class GetAccountRequest(_message.Message):
+    __slots__ = ("user_id",)
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    def __init__(self, user_id: _Optional[str] = ...) -> None: ...
+
+class GetAccountResponse(_message.Message):
+    __slots__ = ("user_id", "email", "primary_group", "favorite_groups")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
+    FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    email: str
+    primary_group: str
+    favorite_groups: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, user_id: _Optional[str] = ..., email: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class UpdateAccountPreferencesRequest(_message.Message):
+    __slots__ = ("user_id", "primary_group", "favorite_groups")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
+    FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    primary_group: str
+    favorite_groups: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, user_id: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class UpdateAccountPreferencesResponse(_message.Message):
+    __slots__ = ("user_id", "email", "primary_group", "favorite_groups")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
+    FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    email: str
+    primary_group: str
+    favorite_groups: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, user_id: _Optional[str] = ..., email: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...

@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_SendCode_FullMethodName             = "/orbit.auth.v1.AuthService/SendCode"
-	AuthService_VerifyCode_FullMethodName           = "/orbit.auth.v1.AuthService/VerifyCode"
-	AuthService_RefreshToken_FullMethodName         = "/orbit.auth.v1.AuthService/RefreshToken"
-	AuthService_Logout_FullMethodName               = "/orbit.auth.v1.AuthService/Logout"
-	AuthService_BeginOAuthLogin_FullMethodName      = "/orbit.auth.v1.AuthService/BeginOAuthLogin"
-	AuthService_FinishOAuthLogin_FullMethodName     = "/orbit.auth.v1.AuthService/FinishOAuthLogin"
-	AuthService_BeginIdentityLink_FullMethodName    = "/orbit.auth.v1.AuthService/BeginIdentityLink"
-	AuthService_FinishIdentityLink_FullMethodName   = "/orbit.auth.v1.AuthService/FinishIdentityLink"
-	AuthService_ListLinkedIdentities_FullMethodName = "/orbit.auth.v1.AuthService/ListLinkedIdentities"
-	AuthService_UnlinkIdentity_FullMethodName       = "/orbit.auth.v1.AuthService/UnlinkIdentity"
+	AuthService_SendCode_FullMethodName                 = "/orbit.auth.v1.AuthService/SendCode"
+	AuthService_VerifyCode_FullMethodName               = "/orbit.auth.v1.AuthService/VerifyCode"
+	AuthService_RefreshToken_FullMethodName             = "/orbit.auth.v1.AuthService/RefreshToken"
+	AuthService_Logout_FullMethodName                   = "/orbit.auth.v1.AuthService/Logout"
+	AuthService_BeginOAuthLogin_FullMethodName          = "/orbit.auth.v1.AuthService/BeginOAuthLogin"
+	AuthService_FinishOAuthLogin_FullMethodName         = "/orbit.auth.v1.AuthService/FinishOAuthLogin"
+	AuthService_BeginIdentityLink_FullMethodName        = "/orbit.auth.v1.AuthService/BeginIdentityLink"
+	AuthService_FinishIdentityLink_FullMethodName       = "/orbit.auth.v1.AuthService/FinishIdentityLink"
+	AuthService_ListLinkedIdentities_FullMethodName     = "/orbit.auth.v1.AuthService/ListLinkedIdentities"
+	AuthService_UnlinkIdentity_FullMethodName           = "/orbit.auth.v1.AuthService/UnlinkIdentity"
+	AuthService_GetAccount_FullMethodName               = "/orbit.auth.v1.AuthService/GetAccount"
+	AuthService_UpdateAccountPreferences_FullMethodName = "/orbit.auth.v1.AuthService/UpdateAccountPreferences"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -45,6 +47,8 @@ type AuthServiceClient interface {
 	FinishIdentityLink(ctx context.Context, in *FinishIdentityLinkRequest, opts ...grpc.CallOption) (*FinishIdentityLinkResponse, error)
 	ListLinkedIdentities(ctx context.Context, in *ListLinkedIdentitiesRequest, opts ...grpc.CallOption) (*ListLinkedIdentitiesResponse, error)
 	UnlinkIdentity(ctx context.Context, in *UnlinkIdentityRequest, opts ...grpc.CallOption) (*UnlinkIdentityResponse, error)
+	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error)
+	UpdateAccountPreferences(ctx context.Context, in *UpdateAccountPreferencesRequest, opts ...grpc.CallOption) (*UpdateAccountPreferencesResponse, error)
 }
 
 type authServiceClient struct {
@@ -155,6 +159,26 @@ func (c *authServiceClient) UnlinkIdentity(ctx context.Context, in *UnlinkIdenti
 	return out, nil
 }
 
+func (c *authServiceClient) GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAccountResponse)
+	err := c.cc.Invoke(ctx, AuthService_GetAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) UpdateAccountPreferences(ctx context.Context, in *UpdateAccountPreferencesRequest, opts ...grpc.CallOption) (*UpdateAccountPreferencesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateAccountPreferencesResponse)
+	err := c.cc.Invoke(ctx, AuthService_UpdateAccountPreferences_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -169,6 +193,8 @@ type AuthServiceServer interface {
 	FinishIdentityLink(context.Context, *FinishIdentityLinkRequest) (*FinishIdentityLinkResponse, error)
 	ListLinkedIdentities(context.Context, *ListLinkedIdentitiesRequest) (*ListLinkedIdentitiesResponse, error)
 	UnlinkIdentity(context.Context, *UnlinkIdentityRequest) (*UnlinkIdentityResponse, error)
+	GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error)
+	UpdateAccountPreferences(context.Context, *UpdateAccountPreferencesRequest) (*UpdateAccountPreferencesResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -208,6 +234,12 @@ func (UnimplementedAuthServiceServer) ListLinkedIdentities(context.Context, *Lis
 }
 func (UnimplementedAuthServiceServer) UnlinkIdentity(context.Context, *UnlinkIdentityRequest) (*UnlinkIdentityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnlinkIdentity not implemented")
+}
+func (UnimplementedAuthServiceServer) GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccount not implemented")
+}
+func (UnimplementedAuthServiceServer) UpdateAccountPreferences(context.Context, *UpdateAccountPreferencesRequest) (*UpdateAccountPreferencesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountPreferences not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -410,6 +442,42 @@ func _AuthService_UnlinkIdentity_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_GetAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GetAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GetAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GetAccount(ctx, req.(*GetAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_UpdateAccountPreferences_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAccountPreferencesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).UpdateAccountPreferences(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_UpdateAccountPreferences_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).UpdateAccountPreferences(ctx, req.(*UpdateAccountPreferencesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -456,6 +524,14 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnlinkIdentity",
 			Handler:    _AuthService_UnlinkIdentity_Handler,
+		},
+		{
+			MethodName: "GetAccount",
+			Handler:    _AuthService_GetAccount_Handler,
+		},
+		{
+			MethodName: "UpdateAccountPreferences",
+			Handler:    _AuthService_UpdateAccountPreferences_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

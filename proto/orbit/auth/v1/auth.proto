@@ -21,6 +21,9 @@ service AuthService {
   rpc FinishIdentityLink(FinishIdentityLinkRequest) returns (FinishIdentityLinkResponse);
   rpc ListLinkedIdentities(ListLinkedIdentitiesRequest) returns (ListLinkedIdentitiesResponse);
   rpc UnlinkIdentity(UnlinkIdentityRequest) returns (UnlinkIdentityResponse);
+
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
+  rpc UpdateAccountPreferences(UpdateAccountPreferencesRequest) returns (UpdateAccountPreferencesResponse);
 }
 
 message SendCodeRequest {
@@ -66,3 +69,28 @@ message LogoutRequest {
 }
 
 message LogoutResponse {}
+
+message GetAccountRequest {
+  string user_id = 1;
+}
+
+message GetAccountResponse {
+  string user_id = 1;
+  string email = 2;
+  string primary_group = 3;
+  repeated string favorite_groups = 4;
+}
+
+message UpdateAccountPreferencesRequest {
+  string user_id = 1;
+  optional string primary_group = 2;
+  repeated string favorite_groups = 3;
+}
+
+message UpdateAccountPreferencesResponse {
+  string user_id = 1;
+  string email = 2;
+  string primary_group = 3;
+  repeated string favorite_groups = 4;
+}
+

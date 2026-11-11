@@ -66,6 +66,16 @@ class AuthServiceStub(object):
                 request_serializer=orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityRequest.SerializeToString,
                 response_deserializer=orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityResponse.FromString,
                 _registered_method=True)
+        self.GetAccount = channel.unary_unary(
+                '/orbit.auth.v1.AuthService/GetAccount',
+                request_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountRequest.SerializeToString,
+                response_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountResponse.FromString,
+                _registered_method=True)
+        self.UpdateAccountPreferences = channel.unary_unary(
+                '/orbit.auth.v1.AuthService/UpdateAccountPreferences',
+                request_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.SerializeToString,
+                response_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.FromString,
+                _registered_method=True)
 
 
 class AuthServiceServicer(object):
@@ -131,6 +141,18 @@ class AuthServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAccount(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UpdateAccountPreferences(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -183,6 +205,16 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     servicer.UnlinkIdentity,
                     request_deserializer=orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityRequest.FromString,
                     response_serializer=orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityResponse.SerializeToString,
+            ),
+            'GetAccount': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetAccount,
+                    request_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountRequest.FromString,
+                    response_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountResponse.SerializeToString,
+            ),
+            'UpdateAccountPreferences': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateAccountPreferences,
+                    request_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.FromString,
+                    response_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -455,6 +487,60 @@ class AuthService(object):
             '/orbit.auth.v1.AuthService/UnlinkIdentity',
             orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityRequest.SerializeToString,
             orbit_dot_auth_dot_v1_dot_identity__pb2.UnlinkIdentityResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetAccount(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.auth.v1.AuthService/GetAccount',
+            orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountRequest.SerializeToString,
+            orbit_dot_auth_dot_v1_dot_auth__pb2.GetAccountResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UpdateAccountPreferences(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.auth.v1.AuthService/UpdateAccountPreferences',
+            orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.SerializeToString,
+            orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.FromString,
             options,
             channel_credentials,
             insecure,
