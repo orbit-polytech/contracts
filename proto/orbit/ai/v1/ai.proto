@@ -30,6 +30,8 @@ enum ChunkStage {
   CHUNK_STAGE_CITATIONS = 3;
   CHUNK_STAGE_DONE = 4;
   CHUNK_STAGE_ERROR = 5;
+  CHUNK_STAGE_CANCELLED = 6;
+  CHUNK_STAGE_RETRIEVAL = 7;
 }
 
 message ChatStreamRequest {
@@ -48,6 +50,7 @@ message ChatStreamResponse {
   int32 error_code = 5;
   string conversation_id = 6;
   string message_id = 7;
+  int64 duration_ms = 9;
 }
 
 message CancelGenerationRequest {

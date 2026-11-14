@@ -14,12 +14,16 @@ class ChunkStage(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     CHUNK_STAGE_CITATIONS: _ClassVar[ChunkStage]
     CHUNK_STAGE_DONE: _ClassVar[ChunkStage]
     CHUNK_STAGE_ERROR: _ClassVar[ChunkStage]
+    CHUNK_STAGE_CANCELLED: _ClassVar[ChunkStage]
+    CHUNK_STAGE_RETRIEVAL: _ClassVar[ChunkStage]
 CHUNK_STAGE_UNSPECIFIED: ChunkStage
 CHUNK_STAGE_START: ChunkStage
 CHUNK_STAGE_DELTA: ChunkStage
 CHUNK_STAGE_CITATIONS: ChunkStage
 CHUNK_STAGE_DONE: ChunkStage
 CHUNK_STAGE_ERROR: ChunkStage
+CHUNK_STAGE_CANCELLED: ChunkStage
+CHUNK_STAGE_RETRIEVAL: ChunkStage
 
 class StudentContext(_message.Message):
     __slots__ = ("group_title", "faculty", "course")
@@ -60,7 +64,7 @@ class ChatStreamRequest(_message.Message):
     def __init__(self, conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., query: _Optional[str] = ..., context: _Optional[_Union[StudentContext, _Mapping]] = ..., model: _Optional[str] = ...) -> None: ...
 
 class ChatStreamResponse(_message.Message):
-    __slots__ = ("stage", "delta_text", "citations", "error_message", "error_code", "conversation_id", "message_id")
+    __slots__ = ("stage", "delta_text", "citations", "error_message", "error_code", "conversation_id", "message_id", "duration_ms")
     STAGE_FIELD_NUMBER: _ClassVar[int]
     DELTA_TEXT_FIELD_NUMBER: _ClassVar[int]
     CITATIONS_FIELD_NUMBER: _ClassVar[int]
@@ -68,6 +72,7 @@ class ChatStreamResponse(_message.Message):
     ERROR_CODE_FIELD_NUMBER: _ClassVar[int]
     CONVERSATION_ID_FIELD_NUMBER: _ClassVar[int]
     MESSAGE_ID_FIELD_NUMBER: _ClassVar[int]
+    DURATION_MS_FIELD_NUMBER: _ClassVar[int]
     stage: ChunkStage
     delta_text: str
     citations: _containers.RepeatedCompositeFieldContainer[SourceCitation]
@@ -75,7 +80,8 @@ class ChatStreamResponse(_message.Message):
     error_code: int
     conversation_id: str
     message_id: str
-    def __init__(self, stage: _Optional[_Union[ChunkStage, str]] = ..., delta_text: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., error_message: _Optional[str] = ..., error_code: _Optional[int] = ..., conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ...) -> None: ...
+    duration_ms: int
+    def __init__(self, stage: _Optional[_Union[ChunkStage, str]] = ..., delta_text: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., error_message: _Optional[str] = ..., error_code: _Optional[int] = ..., conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., duration_ms: _Optional[int] = ...) -> None: ...
 
 class CancelGenerationRequest(_message.Message):
     __slots__ = ("conversation_id", "message_id")
