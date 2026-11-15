@@ -22,9 +22,10 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14orbit/ai/v1/ai.proto\x12\x0borbit.ai.v1\"c\n\x0eStudentContext\x12\x1f\n\x0bgroup_title\x18\x01 \x01(\tR\ngroupTitle\x12\x18\n\x07\x66\x61\x63ulty\x18\x02 \x01(\tR\x07\x66\x61\x63ulty\x12\x16\n\x06\x63ourse\x18\x03 \x01(\x05R\x06\x63ourse\"\xa6\x01\n\x0eSourceCitation\x12%\n\x0e\x64ocument_title\x18\x01 \x01(\tR\rdocumentTitle\x12\x18\n\x07section\x18\x02 \x01(\tR\x07section\x12\x10\n\x03url\x18\x03 \x01(\tR\x03url\x12\'\n\x0frelevance_score\x18\x04 \x01(\x02R\x0erelevanceScore\x12\x18\n\x07\x65xcerpt\x18\x05 \x01(\tR\x07\x65xcerpt\"\xbe\x01\n\x11\x43hatStreamRequest\x12\'\n\x0f\x63onversation_id\x18\x01 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x02 \x01(\tR\tmessageId\x12\x14\n\x05query\x18\x03 \x01(\tR\x05query\x12\x35\n\x07\x63ontext\x18\x04 \x01(\x0b\x32\x1b.orbit.ai.v1.StudentContextR\x07\x63ontext\x12\x14\n\x05model\x18\x05 \x01(\tR\x05model\"\xca\x02\n\x12\x43hatStreamResponse\x12-\n\x05stage\x18\x01 \x01(\x0e\x32\x17.orbit.ai.v1.ChunkStageR\x05stage\x12\x1d\n\ndelta_text\x18\x02 \x01(\tR\tdeltaText\x12\x39\n\tcitations\x18\x03 \x03(\x0b\x32\x1b.orbit.ai.v1.SourceCitationR\tcitations\x12#\n\rerror_message\x18\x04 \x01(\tR\x0c\x65rrorMessage\x12\x1d\n\nerror_code\x18\x05 \x01(\x05R\terrorCode\x12\'\n\x0f\x63onversation_id\x18\x06 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x07 \x01(\tR\tmessageId\x12\x1f\n\x0b\x64uration_ms\x18\x08 \x01(\x03R\ndurationMs\"a\n\x17\x43\x61ncelGenerationRequest\x12\'\n\x0f\x63onversation_id\x18\x01 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x02 \x01(\tR\tmessageId\"8\n\x18\x43\x61ncelGenerationResponse\x12\x1c\n\tcancelled\x18\x01 \x01(\x08R\tcancelled*\xd5\x01\n\nChunkStage\x12\x1b\n\x17\x43HUNK_STAGE_UNSPECIFIED\x10\x00\x12\x15\n\x11\x43HUNK_STAGE_START\x10\x01\x12\x15\n\x11\x43HUNK_STAGE_DELTA\x10\x02\x12\x19\n\x15\x43HUNK_STAGE_CITATIONS\x10\x03\x12\x14\n\x10\x43HUNK_STAGE_DONE\x10\x04\x12\x15\n\x11\x43HUNK_STAGE_ERROR\x10\x05\x12\x19\n\x15\x43HUNK_STAGE_CANCELLED\x10\x06\x12\x19\n\x15\x43HUNK_STAGE_RETRIEVAL\x10\x07\x32\xbd\x01\n\tAIService\x12O\n\nChatStream\x12\x1e.orbit.ai.v1.ChatStreamRequest\x1a\x1f.orbit.ai.v1.ChatStreamResponse0\x01\x12_\n\x10\x43\x61ncelGeneration\x12$.orbit.ai.v1.CancelGenerationRequest\x1a%.orbit.ai.v1.CancelGenerationResponseB=Z;github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1;aiv1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14orbit/ai/v1/ai.proto\x12\x0borbit.ai.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"c\n\x0eStudentContext\x12\x1f\n\x0bgroup_title\x18\x01 \x01(\tR\ngroupTitle\x12\x18\n\x07\x66\x61\x63ulty\x18\x02 \x01(\tR\x07\x66\x61\x63ulty\x12\x16\n\x06\x63ourse\x18\x03 \x01(\x05R\x06\x63ourse\"\xa6\x01\n\x0eSourceCitation\x12%\n\x0e\x64ocument_title\x18\x01 \x01(\tR\rdocumentTitle\x12\x18\n\x07section\x18\x02 \x01(\tR\x07section\x12\x10\n\x03url\x18\x03 \x01(\tR\x03url\x12\'\n\x0frelevance_score\x18\x04 \x01(\x02R\x0erelevanceScore\x12\x18\n\x07\x65xcerpt\x18\x05 \x01(\tR\x07\x65xcerpt\"\xd7\x01\n\x11\x43hatStreamRequest\x12\'\n\x0f\x63onversation_id\x18\x01 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x02 \x01(\tR\tmessageId\x12\x14\n\x05query\x18\x03 \x01(\tR\x05query\x12\x35\n\x07\x63ontext\x18\x04 \x01(\x0b\x32\x1b.orbit.ai.v1.StudentContextR\x07\x63ontext\x12\x14\n\x05model\x18\x05 \x01(\tR\x05model\x12\x17\n\x07user_id\x18\x06 \x01(\tR\x06userId\"\xca\x02\n\x12\x43hatStreamResponse\x12-\n\x05stage\x18\x01 \x01(\x0e\x32\x17.orbit.ai.v1.ChunkStageR\x05stage\x12\x1d\n\ndelta_text\x18\x02 \x01(\tR\tdeltaText\x12\x39\n\tcitations\x18\x03 \x03(\x0b\x32\x1b.orbit.ai.v1.SourceCitationR\tcitations\x12#\n\rerror_message\x18\x04 \x01(\tR\x0c\x65rrorMessage\x12\x1d\n\nerror_code\x18\x05 \x01(\x05R\terrorCode\x12\'\n\x0f\x63onversation_id\x18\x06 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x07 \x01(\tR\tmessageId\x12\x1f\n\x0b\x64uration_ms\x18\x08 \x01(\x03R\ndurationMs\"a\n\x17\x43\x61ncelGenerationRequest\x12\'\n\x0f\x63onversation_id\x18\x01 \x01(\tR\x0e\x63onversationId\x12\x1d\n\nmessage_id\x18\x02 \x01(\tR\tmessageId\"8\n\x18\x43\x61ncelGenerationResponse\x12\x1c\n\tcancelled\x18\x01 \x01(\x08R\tcancelled\"\x8a\x02\n\x13\x43onversationSummary\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n\x05title\x18\x02 \x01(\tR\x05title\x12\x39\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\x12%\n\x0emessages_count\x18\x05 \x01(\x05R\rmessagesCount\x12\x30\n\x14last_message_snippet\x18\x06 \x01(\tR\x12lastMessageSnippet\"\xe2\x01\n\x0b\x43hatMessage\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n\x04role\x18\x02 \x01(\tR\x04role\x12\x18\n\x07\x63ontent\x18\x03 \x01(\tR\x07\x63ontent\x12\x39\n\tcitations\x18\x04 \x03(\x0b\x32\x1b.orbit.ai.v1.SourceCitationR\tcitations\x12\x39\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1f\n\x0b\x64uration_ms\x18\x06 \x01(\x03R\ndurationMs\"`\n\x17GetConversationsRequest\x12\x17\n\x07user_id\x18\x01 \x01(\tR\x06userId\x12\x14\n\x05limit\x18\x02 \x01(\x05R\x05limit\x12\x16\n\x06offset\x18\x03 \x01(\x05R\x06offset\"\x83\x01\n\x18GetConversationsResponse\x12\x46\n\rconversations\x18\x01 \x03(\x0b\x32 .orbit.ai.v1.ConversationSummaryR\rconversations\x12\x1f\n\x0btotal_count\x18\x02 \x01(\x05R\ntotalCount\"w\n\x1dGetConversationHistoryRequest\x12\x17\n\x07user_id\x18\x01 \x01(\tR\x06userId\x12\'\n\x0f\x63onversation_id\x18\x02 \x01(\tR\x0e\x63onversationId\x12\x14\n\x05limit\x18\x03 \x01(\x05R\x05limit\"\x7f\n\x1eGetConversationHistoryResponse\x12\'\n\x0f\x63onversation_id\x18\x01 \x01(\tR\x0e\x63onversationId\x12\x34\n\x08messages\x18\x02 \x03(\x0b\x32\x18.orbit.ai.v1.ChatMessageR\x08messages\"]\n\x19\x44\x65leteConversationRequest\x12\x17\n\x07user_id\x18\x01 \x01(\tR\x06userId\x12\'\n\x0f\x63onversation_id\x18\x02 \x01(\tR\x0e\x63onversationId\"6\n\x1a\x44\x65leteConversationResponse\x12\x18\n\x07success\x18\x01 \x01(\x08R\x07success*\xd5\x01\n\nChunkStage\x12\x1b\n\x17\x43HUNK_STAGE_UNSPECIFIED\x10\x00\x12\x15\n\x11\x43HUNK_STAGE_START\x10\x01\x12\x15\n\x11\x43HUNK_STAGE_DELTA\x10\x02\x12\x19\n\x15\x43HUNK_STAGE_CITATIONS\x10\x03\x12\x14\n\x10\x43HUNK_STAGE_DONE\x10\x04\x12\x15\n\x11\x43HUNK_STAGE_ERROR\x10\x05\x12\x19\n\x15\x43HUNK_STAGE_CANCELLED\x10\x06\x12\x19\n\x15\x43HUNK_STAGE_RETRIEVAL\x10\x07\x32\xf8\x03\n\tAIService\x12O\n\nChatStream\x12\x1e.orbit.ai.v1.ChatStreamRequest\x1a\x1f.orbit.ai.v1.ChatStreamResponse0\x01\x12_\n\x10\x43\x61ncelGeneration\x12$.orbit.ai.v1.CancelGenerationRequest\x1a%.orbit.ai.v1.CancelGenerationResponse\x12_\n\x10GetConversations\x12$.orbit.ai.v1.GetConversationsRequest\x1a%.orbit.ai.v1.GetConversationsResponse\x12q\n\x16GetConversationHistory\x12*.orbit.ai.v1.GetConversationHistoryRequest\x1a+.orbit.ai.v1.GetConversationHistoryResponse\x12\x65\n\x12\x44\x65leteConversation\x12&.orbit.ai.v1.DeleteConversationRequest\x1a\'.orbit.ai.v1.DeleteConversationResponseB=Z;github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1;aiv1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -32,20 +33,36 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'orbit.ai.v1.ai_pb2', _globa
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'Z;github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1;aiv1'
-  _globals['_CHUNKSTAGE']._serialized_start=991
-  _globals['_CHUNKSTAGE']._serialized_end=1204
-  _globals['_STUDENTCONTEXT']._serialized_start=37
-  _globals['_STUDENTCONTEXT']._serialized_end=136
-  _globals['_SOURCECITATION']._serialized_start=139
-  _globals['_SOURCECITATION']._serialized_end=305
-  _globals['_CHATSTREAMREQUEST']._serialized_start=308
-  _globals['_CHATSTREAMREQUEST']._serialized_end=498
-  _globals['_CHATSTREAMRESPONSE']._serialized_start=501
-  _globals['_CHATSTREAMRESPONSE']._serialized_end=831
-  _globals['_CANCELGENERATIONREQUEST']._serialized_start=833
-  _globals['_CANCELGENERATIONREQUEST']._serialized_end=930
-  _globals['_CANCELGENERATIONRESPONSE']._serialized_start=932
-  _globals['_CANCELGENERATIONRESPONSE']._serialized_end=988
-  _globals['_AISERVICE']._serialized_start=1207
-  _globals['_AISERVICE']._serialized_end=1396
+  _globals['_CHUNKSTAGE']._serialized_start=2180
+  _globals['_CHUNKSTAGE']._serialized_end=2393
+  _globals['_STUDENTCONTEXT']._serialized_start=70
+  _globals['_STUDENTCONTEXT']._serialized_end=169
+  _globals['_SOURCECITATION']._serialized_start=172
+  _globals['_SOURCECITATION']._serialized_end=338
+  _globals['_CHATSTREAMREQUEST']._serialized_start=341
+  _globals['_CHATSTREAMREQUEST']._serialized_end=556
+  _globals['_CHATSTREAMRESPONSE']._serialized_start=559
+  _globals['_CHATSTREAMRESPONSE']._serialized_end=889
+  _globals['_CANCELGENERATIONREQUEST']._serialized_start=891
+  _globals['_CANCELGENERATIONREQUEST']._serialized_end=988
+  _globals['_CANCELGENERATIONRESPONSE']._serialized_start=990
+  _globals['_CANCELGENERATIONRESPONSE']._serialized_end=1046
+  _globals['_CONVERSATIONSUMMARY']._serialized_start=1049
+  _globals['_CONVERSATIONSUMMARY']._serialized_end=1315
+  _globals['_CHATMESSAGE']._serialized_start=1318
+  _globals['_CHATMESSAGE']._serialized_end=1544
+  _globals['_GETCONVERSATIONSREQUEST']._serialized_start=1546
+  _globals['_GETCONVERSATIONSREQUEST']._serialized_end=1642
+  _globals['_GETCONVERSATIONSRESPONSE']._serialized_start=1645
+  _globals['_GETCONVERSATIONSRESPONSE']._serialized_end=1776
+  _globals['_GETCONVERSATIONHISTORYREQUEST']._serialized_start=1778
+  _globals['_GETCONVERSATIONHISTORYREQUEST']._serialized_end=1897
+  _globals['_GETCONVERSATIONHISTORYRESPONSE']._serialized_start=1899
+  _globals['_GETCONVERSATIONHISTORYRESPONSE']._serialized_end=2026
+  _globals['_DELETECONVERSATIONREQUEST']._serialized_start=2028
+  _globals['_DELETECONVERSATIONREQUEST']._serialized_end=2121
+  _globals['_DELETECONVERSATIONRESPONSE']._serialized_start=2123
+  _globals['_DELETECONVERSATIONRESPONSE']._serialized_end=2177
+  _globals['_AISERVICE']._serialized_start=2396
+  _globals['_AISERVICE']._serialized_end=2900
 # @@protoc_insertion_point(module_scope)

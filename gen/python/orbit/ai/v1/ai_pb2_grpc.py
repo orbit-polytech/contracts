@@ -24,6 +24,21 @@ class AIServiceStub(object):
                 request_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationRequest.SerializeToString,
                 response_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationResponse.FromString,
                 _registered_method=True)
+        self.GetConversations = channel.unary_unary(
+                '/orbit.ai.v1.AIService/GetConversations',
+                request_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsRequest.SerializeToString,
+                response_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsResponse.FromString,
+                _registered_method=True)
+        self.GetConversationHistory = channel.unary_unary(
+                '/orbit.ai.v1.AIService/GetConversationHistory',
+                request_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryRequest.SerializeToString,
+                response_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryResponse.FromString,
+                _registered_method=True)
+        self.DeleteConversation = channel.unary_unary(
+                '/orbit.ai.v1.AIService/DeleteConversation',
+                request_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationRequest.SerializeToString,
+                response_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationResponse.FromString,
+                _registered_method=True)
 
 
 class AIServiceServicer(object):
@@ -41,6 +56,24 @@ class AIServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetConversations(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetConversationHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteConversation(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AIServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +86,21 @@ def add_AIServiceServicer_to_server(servicer, server):
                     servicer.CancelGeneration,
                     request_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationRequest.FromString,
                     response_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationResponse.SerializeToString,
+            ),
+            'GetConversations': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetConversations,
+                    request_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsRequest.FromString,
+                    response_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsResponse.SerializeToString,
+            ),
+            'GetConversationHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetConversationHistory,
+                    request_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryRequest.FromString,
+                    response_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryResponse.SerializeToString,
+            ),
+            'DeleteConversation': grpc.unary_unary_rpc_method_handler(
+                    servicer.DeleteConversation,
+                    request_deserializer=orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationRequest.FromString,
+                    response_serializer=orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -109,6 +157,87 @@ class AIService(object):
             '/orbit.ai.v1.AIService/CancelGeneration',
             orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationRequest.SerializeToString,
             orbit_dot_ai_dot_v1_dot_ai__pb2.CancelGenerationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetConversations(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.ai.v1.AIService/GetConversations',
+            orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsRequest.SerializeToString,
+            orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetConversationHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.ai.v1.AIService/GetConversationHistory',
+            orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryRequest.SerializeToString,
+            orbit_dot_ai_dot_v1_dot_ai__pb2.GetConversationHistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def DeleteConversation(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.ai.v1.AIService/DeleteConversation',
+            orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationRequest.SerializeToString,
+            orbit_dot_ai_dot_v1_dot_ai__pb2.DeleteConversationResponse.FromString,
             options,
             channel_credentials,
             insecure,
