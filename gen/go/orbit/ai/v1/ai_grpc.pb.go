@@ -19,8 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AIService_ChatStream_FullMethodName       = "/orbit.ai.v1.AIService/ChatStream"
-	AIService_CancelGeneration_FullMethodName = "/orbit.ai.v1.AIService/CancelGeneration"
+	AIService_ChatStream_FullMethodName             = "/orbit.ai.v1.AIService/ChatStream"
+	AIService_CancelGeneration_FullMethodName       = "/orbit.ai.v1.AIService/CancelGeneration"
+	AIService_GetConversations_FullMethodName       = "/orbit.ai.v1.AIService/GetConversations"
+	AIService_GetConversationHistory_FullMethodName = "/orbit.ai.v1.AIService/GetConversationHistory"
+	AIService_DeleteConversation_FullMethodName     = "/orbit.ai.v1.AIService/DeleteConversation"
 )
 
 // AIServiceClient is the client API for AIService service.
@@ -29,6 +32,9 @@ const (
 type AIServiceClient interface {
 	ChatStream(ctx context.Context, in *ChatStreamRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ChatStreamResponse], error)
 	CancelGeneration(ctx context.Context, in *CancelGenerationRequest, opts ...grpc.CallOption) (*CancelGenerationResponse, error)
+	GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error)
+	GetConversationHistory(ctx context.Context, in *GetConversationHistoryRequest, opts ...grpc.CallOption) (*GetConversationHistoryResponse, error)
+	DeleteConversation(ctx context.Context, in *DeleteConversationRequest, opts ...grpc.CallOption) (*DeleteConversationResponse, error)
 }
 
 type aIServiceClient struct {
@@ -68,12 +74,45 @@ func (c *aIServiceClient) CancelGeneration(ctx context.Context, in *CancelGenera
 	return out, nil
 }
 
+func (c *aIServiceClient) GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetConversationsResponse)
+	err := c.cc.Invoke(ctx, AIService_GetConversations_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) GetConversationHistory(ctx context.Context, in *GetConversationHistoryRequest, opts ...grpc.CallOption) (*GetConversationHistoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetConversationHistoryResponse)
+	err := c.cc.Invoke(ctx, AIService_GetConversationHistory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *aIServiceClient) DeleteConversation(ctx context.Context, in *DeleteConversationRequest, opts ...grpc.CallOption) (*DeleteConversationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteConversationResponse)
+	err := c.cc.Invoke(ctx, AIService_DeleteConversation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AIServiceServer is the server API for AIService service.
 // All implementations must embed UnimplementedAIServiceServer
 // for forward compatibility.
 type AIServiceServer interface {
 	ChatStream(*ChatStreamRequest, grpc.ServerStreamingServer[ChatStreamResponse]) error
 	CancelGeneration(context.Context, *CancelGenerationRequest) (*CancelGenerationResponse, error)
+	GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error)
+	GetConversationHistory(context.Context, *GetConversationHistoryRequest) (*GetConversationHistoryResponse, error)
+	DeleteConversation(context.Context, *DeleteConversationRequest) (*DeleteConversationResponse, error)
 	mustEmbedUnimplementedAIServiceServer()
 }
 
@@ -89,6 +128,15 @@ func (UnimplementedAIServiceServer) ChatStream(*ChatStreamRequest, grpc.ServerSt
 }
 func (UnimplementedAIServiceServer) CancelGeneration(context.Context, *CancelGenerationRequest) (*CancelGenerationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelGeneration not implemented")
+}
+func (UnimplementedAIServiceServer) GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConversations not implemented")
+}
+func (UnimplementedAIServiceServer) GetConversationHistory(context.Context, *GetConversationHistoryRequest) (*GetConversationHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConversationHistory not implemented")
+}
+func (UnimplementedAIServiceServer) DeleteConversation(context.Context, *DeleteConversationRequest) (*DeleteConversationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteConversation not implemented")
 }
 func (UnimplementedAIServiceServer) mustEmbedUnimplementedAIServiceServer() {}
 func (UnimplementedAIServiceServer) testEmbeddedByValue()                   {}
@@ -140,6 +188,60 @@ func _AIService_CancelGeneration_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AIService_GetConversations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConversationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).GetConversations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_GetConversations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).GetConversations(ctx, req.(*GetConversationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_GetConversationHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConversationHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).GetConversationHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_GetConversationHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).GetConversationHistory(ctx, req.(*GetConversationHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AIService_DeleteConversation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteConversationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).DeleteConversation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_DeleteConversation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).DeleteConversation(ctx, req.(*DeleteConversationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AIService_ServiceDesc is the grpc.ServiceDesc for AIService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -150,6 +252,18 @@ var AIService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelGeneration",
 			Handler:    _AIService_CancelGeneration_Handler,
+		},
+		{
+			MethodName: "GetConversations",
+			Handler:    _AIService_GetConversations_Handler,
+		},
+		{
+			MethodName: "GetConversationHistory",
+			Handler:    _AIService_GetConversationHistory_Handler,
+		},
+		{
+			MethodName: "DeleteConversation",
+			Handler:    _AIService_DeleteConversation_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

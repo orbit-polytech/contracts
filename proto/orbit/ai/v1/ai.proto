@@ -2,11 +2,16 @@ syntax = "proto3";
 
 package orbit.ai.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1;aiv1";
 
 service AIService {
   rpc ChatStream(ChatStreamRequest) returns (stream ChatStreamResponse);
   rpc CancelGeneration(CancelGenerationRequest) returns (CancelGenerationResponse);
+  rpc GetConversations(GetConversationsRequest) returns (GetConversationsResponse);
+  rpc GetConversationHistory(GetConversationHistoryRequest) returns (GetConversationHistoryResponse);
+  rpc DeleteConversation(DeleteConversationRequest) returns (DeleteConversationResponse);
 }
 
 message StudentContext {
@@ -40,6 +45,7 @@ message ChatStreamRequest {
   string query = 3;
   StudentContext context = 4;
   string model = 5;
+  string user_id = 6;
 }
 
 message ChatStreamResponse {
@@ -60,4 +66,53 @@ message CancelGenerationRequest {
 
 message CancelGenerationResponse {
   bool cancelled = 1;
+}
+
+message ConversationSummary {
+  string id = 1;
+  string title = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  int32 messages_count = 5;
+  string last_message_snippet = 6;
+}
+
+message ChatMessage {
+  string id = 1;
+  string role = 2;
+  string content = 3;
+  repeated SourceCitation citations = 4;
+  google.protobuf.Timestamp created_at = 5;
+  int64 duration_ms = 6;
+}
+
+message GetConversationsRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+message GetConversationsResponse {
+  repeated ConversationSummary conversations = 1;
+  int32 total_count = 2;
+}
+
+message GetConversationHistoryRequest {
+  string user_id = 1;
+  string conversation_id = 2;
+  int32 limit = 3;
+}
+
+message GetConversationHistoryResponse {
+  string conversation_id = 1;
+  repeated ChatMessage messages = 2;
+}
+
+message DeleteConversationRequest {
+  string user_id = 1;
+  string conversation_id = 2;
+}
+
+message DeleteConversationResponse {
+  bool success = 1;
 }
