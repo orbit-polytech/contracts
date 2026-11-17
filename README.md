@@ -5,15 +5,17 @@
 ## Структура репозитория
 
 - `proto/` — исходные `.proto` файлы контрактов API сервисов:
-  - `proto/orbit/auth/v1/auth.proto` — сервис аутентификации (`AuthService`).
+  - `proto/orbit/auth/v1/auth.proto`, `identity.proto`, `oauth.proto` — сервис аутентификации (`AuthService`), OAuth и привязка идентичностей.
   - `proto/orbit/schedule/v1/schedule.proto` — сервис расписания занятий (`ScheduleService`).
   - `proto/orbit/ai/v1/ai.proto` — сервис искусственного интеллекта и стриминга ответов (`AIService`).
+  - `proto/orbit/users/v1/users.proto` — сервис профилей пользователей (`UserService`).
 - `gen/go/` — сгенерированный Go-код (Protobuf-структуры и gRPC клиенты/серверы).
 - `gen/python/` — сгенерированный Python-код (Protobuf-сообщения и gRPC stubs).
 - `docs/` — подробные инженерные спецификации и правила взаимодействия сервисов:
   - [`docs/auth-v1.md`](docs/auth-v1.md) — спецификация `AuthService` (сессии, ротация токенов, OTP, коды ошибок).
   - [`docs/schedule-v1.md`](docs/schedule-v1.md) — спецификация `ScheduleService` (кэширование, Stale-While-Revalidate, инварианты дат).
   - [`docs/ai-v1.md`](docs/ai-v1.md) — спецификация `AIService` (жизненный цикл стриминга, стадии, идемпотентность, отмена генерации).
+  - [`docs/users-v1.md`](docs/users-v1.md) — спецификация `UserService` (профиль пользователя, роли, пакетное получение профилей).
 - `buf.yaml` — конфигурация Buf CLI (`version: v2`, стандарты линтинга `STANDARD`, контроль breaking changes).
 - `buf.gen.yaml` — конфигурация кодогенерации Go и Python через закреплённые удалённые плагины Buf.
 - `Taskfile.yml` — кроссплатформенные команды автоматизации проверок и генерации.
@@ -54,6 +56,7 @@
 - 👉 [Спецификация AuthService v1](docs/auth-v1.md)
 - 👉 [Спецификация ScheduleService v1](docs/schedule-v1.md)
 - 👉 [Спецификация AIService v1](docs/ai-v1.md)
+- 👉 [Спецификация UserService v1](docs/users-v1.md)
 
 ---
 
@@ -140,6 +143,7 @@ python -c "
 from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
 from orbit.auth.v1 import auth_pb2, auth_pb2_grpc
 from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
+from orbit.users.v1 import users_pb2, users_pb2_grpc
 
 req = ai_pb2.ChatStreamRequest(
     conversation_id='a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d',
@@ -168,6 +172,7 @@ import (
     authv1 "github.com/orbit-polytech/contracts/gen/go/orbit/auth/v1"
     schedulev1 "github.com/orbit-polytech/contracts/gen/go/orbit/schedule/v1"
     aiv1 "github.com/orbit-polytech/contracts/gen/go/orbit/ai/v1"
+    usersv1 "github.com/orbit-polytech/contracts/gen/go/orbit/users/v1"
 )
 ```
 
@@ -195,4 +200,5 @@ pip install -e ../contracts
 ```python
 from orbit.ai.v1 import ai_pb2, ai_pb2_grpc
 from orbit.schedule.v1 import schedule_pb2, schedule_pb2_grpc
+from orbit.users.v1 import users_pb2, users_pb2_grpc
 ```
