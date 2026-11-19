@@ -17,6 +17,12 @@ class ChunkStage(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     CHUNK_STAGE_ERROR: _ClassVar[ChunkStage]
     CHUNK_STAGE_CANCELLED: _ClassVar[ChunkStage]
     CHUNK_STAGE_RETRIEVAL: _ClassVar[ChunkStage]
+
+class FeedbackRating(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    FEEDBACK_RATING_UNSPECIFIED: _ClassVar[FeedbackRating]
+    FEEDBACK_RATING_UP: _ClassVar[FeedbackRating]
+    FEEDBACK_RATING_DOWN: _ClassVar[FeedbackRating]
 CHUNK_STAGE_UNSPECIFIED: ChunkStage
 CHUNK_STAGE_START: ChunkStage
 CHUNK_STAGE_DELTA: ChunkStage
@@ -25,6 +31,9 @@ CHUNK_STAGE_DONE: ChunkStage
 CHUNK_STAGE_ERROR: ChunkStage
 CHUNK_STAGE_CANCELLED: ChunkStage
 CHUNK_STAGE_RETRIEVAL: ChunkStage
+FEEDBACK_RATING_UNSPECIFIED: FeedbackRating
+FEEDBACK_RATING_UP: FeedbackRating
+FEEDBACK_RATING_DOWN: FeedbackRating
 
 class StudentContext(_message.Message):
     __slots__ = ("group_title", "faculty", "course")
@@ -117,20 +126,24 @@ class ConversationSummary(_message.Message):
     def __init__(self, id: _Optional[str] = ..., title: _Optional[str] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., messages_count: _Optional[int] = ..., last_message_snippet: _Optional[str] = ...) -> None: ...
 
 class ChatMessage(_message.Message):
-    __slots__ = ("id", "role", "content", "citations", "created_at", "duration_ms")
+    __slots__ = ("id", "role", "content", "citations", "created_at", "duration_ms", "feedback_rating", "feedback_reason")
     ID_FIELD_NUMBER: _ClassVar[int]
     ROLE_FIELD_NUMBER: _ClassVar[int]
     CONTENT_FIELD_NUMBER: _ClassVar[int]
     CITATIONS_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     DURATION_MS_FIELD_NUMBER: _ClassVar[int]
+    FEEDBACK_RATING_FIELD_NUMBER: _ClassVar[int]
+    FEEDBACK_REASON_FIELD_NUMBER: _ClassVar[int]
     id: str
     role: str
     content: str
     citations: _containers.RepeatedCompositeFieldContainer[SourceCitation]
     created_at: _timestamp_pb2.Timestamp
     duration_ms: int
-    def __init__(self, id: _Optional[str] = ..., role: _Optional[str] = ..., content: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., duration_ms: _Optional[int] = ...) -> None: ...
+    feedback_rating: FeedbackRating
+    feedback_reason: str
+    def __init__(self, id: _Optional[str] = ..., role: _Optional[str] = ..., content: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., duration_ms: _Optional[int] = ..., feedback_rating: _Optional[_Union[FeedbackRating, str]] = ..., feedback_reason: _Optional[str] = ...) -> None: ...
 
 class GetConversationsRequest(_message.Message):
     __slots__ = ("user_id", "limit", "offset")
@@ -181,3 +194,29 @@ class DeleteConversationResponse(_message.Message):
     SUCCESS_FIELD_NUMBER: _ClassVar[int]
     success: bool
     def __init__(self, success: bool = ...) -> None: ...
+
+class SubmitFeedbackRequest(_message.Message):
+    __slots__ = ("user_id", "conversation_id", "message_id", "rating", "reason", "comment")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    CONVERSATION_ID_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_ID_FIELD_NUMBER: _ClassVar[int]
+    RATING_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    COMMENT_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    conversation_id: str
+    message_id: str
+    rating: FeedbackRating
+    reason: str
+    comment: str
+    def __init__(self, user_id: _Optional[str] = ..., conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., rating: _Optional[_Union[FeedbackRating, str]] = ..., reason: _Optional[str] = ..., comment: _Optional[str] = ...) -> None: ...
+
+class SubmitFeedbackResponse(_message.Message):
+    __slots__ = ("saved", "rating", "reason")
+    SAVED_FIELD_NUMBER: _ClassVar[int]
+    RATING_FIELD_NUMBER: _ClassVar[int]
+    REASON_FIELD_NUMBER: _ClassVar[int]
+    saved: bool
+    rating: FeedbackRating
+    reason: str
+    def __init__(self, saved: bool = ..., rating: _Optional[_Union[FeedbackRating, str]] = ..., reason: _Optional[str] = ...) -> None: ...

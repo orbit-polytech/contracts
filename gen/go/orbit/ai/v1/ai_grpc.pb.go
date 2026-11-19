@@ -24,6 +24,7 @@ const (
 	AIService_GetConversations_FullMethodName       = "/orbit.ai.v1.AIService/GetConversations"
 	AIService_GetConversationHistory_FullMethodName = "/orbit.ai.v1.AIService/GetConversationHistory"
 	AIService_DeleteConversation_FullMethodName     = "/orbit.ai.v1.AIService/DeleteConversation"
+	AIService_SubmitFeedback_FullMethodName         = "/orbit.ai.v1.AIService/SubmitFeedback"
 )
 
 // AIServiceClient is the client API for AIService service.
@@ -35,6 +36,7 @@ type AIServiceClient interface {
 	GetConversations(ctx context.Context, in *GetConversationsRequest, opts ...grpc.CallOption) (*GetConversationsResponse, error)
 	GetConversationHistory(ctx context.Context, in *GetConversationHistoryRequest, opts ...grpc.CallOption) (*GetConversationHistoryResponse, error)
 	DeleteConversation(ctx context.Context, in *DeleteConversationRequest, opts ...grpc.CallOption) (*DeleteConversationResponse, error)
+	SubmitFeedback(ctx context.Context, in *SubmitFeedbackRequest, opts ...grpc.CallOption) (*SubmitFeedbackResponse, error)
 }
 
 type aIServiceClient struct {
@@ -104,6 +106,16 @@ func (c *aIServiceClient) DeleteConversation(ctx context.Context, in *DeleteConv
 	return out, nil
 }
 
+func (c *aIServiceClient) SubmitFeedback(ctx context.Context, in *SubmitFeedbackRequest, opts ...grpc.CallOption) (*SubmitFeedbackResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubmitFeedbackResponse)
+	err := c.cc.Invoke(ctx, AIService_SubmitFeedback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AIServiceServer is the server API for AIService service.
 // All implementations must embed UnimplementedAIServiceServer
 // for forward compatibility.
@@ -113,6 +125,7 @@ type AIServiceServer interface {
 	GetConversations(context.Context, *GetConversationsRequest) (*GetConversationsResponse, error)
 	GetConversationHistory(context.Context, *GetConversationHistoryRequest) (*GetConversationHistoryResponse, error)
 	DeleteConversation(context.Context, *DeleteConversationRequest) (*DeleteConversationResponse, error)
+	SubmitFeedback(context.Context, *SubmitFeedbackRequest) (*SubmitFeedbackResponse, error)
 	mustEmbedUnimplementedAIServiceServer()
 }
 
@@ -137,6 +150,9 @@ func (UnimplementedAIServiceServer) GetConversationHistory(context.Context, *Get
 }
 func (UnimplementedAIServiceServer) DeleteConversation(context.Context, *DeleteConversationRequest) (*DeleteConversationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteConversation not implemented")
+}
+func (UnimplementedAIServiceServer) SubmitFeedback(context.Context, *SubmitFeedbackRequest) (*SubmitFeedbackResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitFeedback not implemented")
 }
 func (UnimplementedAIServiceServer) mustEmbedUnimplementedAIServiceServer() {}
 func (UnimplementedAIServiceServer) testEmbeddedByValue()                   {}
@@ -242,6 +258,24 @@ func _AIService_DeleteConversation_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AIService_SubmitFeedback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubmitFeedbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AIServiceServer).SubmitFeedback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AIService_SubmitFeedback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AIServiceServer).SubmitFeedback(ctx, req.(*SubmitFeedbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AIService_ServiceDesc is the grpc.ServiceDesc for AIService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -264,6 +298,10 @@ var AIService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteConversation",
 			Handler:    _AIService_DeleteConversation_Handler,
+		},
+		{
+			MethodName: "SubmitFeedback",
+			Handler:    _AIService_SubmitFeedback_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

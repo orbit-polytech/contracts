@@ -202,3 +202,83 @@ message StudentContext {
 3. **Защита персональных данных (ПДн):**
    - В `StudentContext` и запросах к LLM запрещено передавать персональные данные (ФИО студента, номер зачётной книжки/студенческого, номер телефона, email).
    - Внешнему провайдеру отправляется обезличенный академический контекст.
+
+---
+
+## 7. Обратная связь по ответам (`SubmitFeedback`)
+
+Метод `SubmitFeedback` позволяет пользователю оценить конкретный ответ ассистента в рамках диалога, указать причину отрицательной оценки и при необходимости добавить текстовый комментарий. Метод идемпотентен (работает по семантике upsert/сброса для пары `(conversation_id, message_id)`).
+
+### 7.1. Контракт Protobuf
+
+```protobuf
+rpc SubmitFeedback(SubmitFeedbackRequest) returns (SubmitFeedbackResponse);
+
+enum FeedbackRating {
+  FEEDBACK_RATING_UNSPECIFIED = 0;
+  FEEDBACK_RATING_UP = 1;
+  FEEDBACK_RATING_DOWN = 2;
+}
+
+message SubmitFeedbackRequest {
+  string user_id = 1;
+  string conversation_id = 2;
+  string message_id = 3;
+  FeedbackRating rating = 4;
+  string reason = 5;
+  string comment = 6;
+}
+
+message SubmitFeedbackResponse {
+  bool saved = 1;
+  FeedbackRating rating = 2;
+  string reason = 3;
+}
+```
+
+### 7.2. Значения `FeedbackRating`
+
+| Значение (`FeedbackRating`) | Код | Семантика |
+| :--- | :--- | :--- |
+| `FEEDBACK_RATING_UNSPECIFIED` | `0` | Оценка отсутствует или снята пользователем. При передаче в `SubmitFeedback` очищает ранее сохранённые `rating`, `reason` и `comment`. |
+| `FEEDBACK_RATING_UP` | `1` | Положительная оценка ответа. При сохранении очищает ранее указанные `reason` и `comment`. |
+| `FEEDBACK_RATING_DOWN` | `2` | Отрицательная оценка ответа. Допускает указание кода причины (`reason`) и произвольного комментария (`comment`). |
+
+### 7.3. Правила валидации и семантика полей
+
+- **`user_id`, `conversation_id`, `message_id`:** обязательные идентификаторы в формате UUIDv4. Сервер проверяет принадлежность диалога `conversation_id` пользователю `user_id`.
+- **`rating`:** одно из значений `FeedbackRating`.
+- **`reason`:** необязательный строковый код причины дизлайка. Допустимые значения: `""` (не указана), `"inaccurate"`, `"incomplete"`, `"wrong_source"`, `"other"`. При `FEEDBACK_RATING_UP` и `FEEDBACK_RATING_UNSPECIFIED` сбрасывается сервером в пустую строку.
+- **`comment`:** необязательный текстовый комментарий пользователя (не более 500 символов после удаления пробелов по краям).
+- **`SubmitFeedbackResponse`:**
+  - `saved` — `true`, если состояние оценки успешно сохранено.
+  - `rating` — актуальное сохранённое значение `FeedbackRating`.
+  - `reason` — актуальная сохранённая причина (`""`, если не задана или очищена).
+
+### 7.4. Ошибки gRPC при вызове `SubmitFeedback`
+
+| Ситуация | gRPC Status Code | Описание |
+| :--- | :--- | :--- |
+| Невалидный UUID (`user_id`, `conversation_id`, `message_id`), неизвестный `reason` или `comment` длиннее 500 символов | `codes.InvalidArgument` | Нарушение валидации входных параметров |
+| Диалог или сообщение `(conversation_id, message_id)` не найдены | `codes.NotFound` | Целевая попытка генерации отсутствует |
+| Диалог принадлежит другому пользователю | `codes.PermissionDenied` | Запрет доступа к чужому диалогу |
+
+### 7.5. Отображение оценки в истории диалога (`ChatMessage`)
+
+Сохранённая оценка возвращается в составе сообщений при вызове `GetConversationHistory` в полях `7` и `8` сообщения `ChatMessage`:
+
+```protobuf
+message ChatMessage {
+  string id = 1;
+  string role = 2;
+  string content = 3;
+  repeated SourceCitation citations = 4;
+  google.protobuf.Timestamp created_at = 5;
+  int64 duration_ms = 6;
+  FeedbackRating feedback_rating = 7;
+  string feedback_reason = 8;
+}
+```
+
+- `feedback_rating` — текущая оценка сообщения (`FEEDBACK_RATING_UNSPECIFIED`, если оценка не выставлена или была снята, а также для реплик пользователя).
+- `feedback_reason` — код причины отрицательной оценки (`""`, если причина не указана или оценка не равна `FEEDBACK_RATING_DOWN`).
