@@ -12,6 +12,7 @@ service AIService {
   rpc GetConversations(GetConversationsRequest) returns (GetConversationsResponse);
   rpc GetConversationHistory(GetConversationHistoryRequest) returns (GetConversationHistoryResponse);
   rpc DeleteConversation(DeleteConversationRequest) returns (DeleteConversationResponse);
+  rpc SubmitFeedback(SubmitFeedbackRequest) returns (SubmitFeedbackResponse);
 }
 
 message StudentContext {
@@ -77,6 +78,12 @@ message ConversationSummary {
   string last_message_snippet = 6;
 }
 
+enum FeedbackRating {
+  FEEDBACK_RATING_UNSPECIFIED = 0;
+  FEEDBACK_RATING_UP = 1;
+  FEEDBACK_RATING_DOWN = 2;
+}
+
 message ChatMessage {
   string id = 1;
   string role = 2;
@@ -84,6 +91,8 @@ message ChatMessage {
   repeated SourceCitation citations = 4;
   google.protobuf.Timestamp created_at = 5;
   int64 duration_ms = 6;
+  FeedbackRating feedback_rating = 7;
+  string feedback_reason = 8;
 }
 
 message GetConversationsRequest {
@@ -115,4 +124,19 @@ message DeleteConversationRequest {
 
 message DeleteConversationResponse {
   bool success = 1;
+}
+
+message SubmitFeedbackRequest {
+  string user_id = 1;
+  string conversation_id = 2;
+  string message_id = 3;
+  FeedbackRating rating = 4;
+  string reason = 5;
+  string comment = 6;
+}
+
+message SubmitFeedbackResponse {
+  bool saved = 1;
+  FeedbackRating rating = 2;
+  string reason = 3;
 }
