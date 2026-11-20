@@ -58,6 +58,7 @@ message ChatStreamResponse {
   string conversation_id = 6;
   string message_id = 7;
   int64 duration_ms = 8;
+  int32 retry_after_sec = 9;
 }
 
 message CancelGenerationRequest {
