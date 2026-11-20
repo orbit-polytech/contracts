@@ -76,7 +76,7 @@ class ChatStreamRequest(_message.Message):
     def __init__(self, conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., query: _Optional[str] = ..., context: _Optional[_Union[StudentContext, _Mapping]] = ..., model: _Optional[str] = ..., user_id: _Optional[str] = ...) -> None: ...
 
 class ChatStreamResponse(_message.Message):
-    __slots__ = ("stage", "delta_text", "citations", "error_message", "error_code", "conversation_id", "message_id", "duration_ms")
+    __slots__ = ("stage", "delta_text", "citations", "error_message", "error_code", "conversation_id", "message_id", "duration_ms", "retry_after_sec")
     STAGE_FIELD_NUMBER: _ClassVar[int]
     DELTA_TEXT_FIELD_NUMBER: _ClassVar[int]
     CITATIONS_FIELD_NUMBER: _ClassVar[int]
@@ -85,6 +85,7 @@ class ChatStreamResponse(_message.Message):
     CONVERSATION_ID_FIELD_NUMBER: _ClassVar[int]
     MESSAGE_ID_FIELD_NUMBER: _ClassVar[int]
     DURATION_MS_FIELD_NUMBER: _ClassVar[int]
+    RETRY_AFTER_SEC_FIELD_NUMBER: _ClassVar[int]
     stage: ChunkStage
     delta_text: str
     citations: _containers.RepeatedCompositeFieldContainer[SourceCitation]
@@ -93,7 +94,8 @@ class ChatStreamResponse(_message.Message):
     conversation_id: str
     message_id: str
     duration_ms: int
-    def __init__(self, stage: _Optional[_Union[ChunkStage, str]] = ..., delta_text: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., error_message: _Optional[str] = ..., error_code: _Optional[int] = ..., conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., duration_ms: _Optional[int] = ...) -> None: ...
+    retry_after_sec: int
+    def __init__(self, stage: _Optional[_Union[ChunkStage, str]] = ..., delta_text: _Optional[str] = ..., citations: _Optional[_Iterable[_Union[SourceCitation, _Mapping]]] = ..., error_message: _Optional[str] = ..., error_code: _Optional[int] = ..., conversation_id: _Optional[str] = ..., message_id: _Optional[str] = ..., duration_ms: _Optional[int] = ..., retry_after_sec: _Optional[int] = ...) -> None: ...
 
 class CancelGenerationRequest(_message.Message):
     __slots__ = ("conversation_id", "message_id")
