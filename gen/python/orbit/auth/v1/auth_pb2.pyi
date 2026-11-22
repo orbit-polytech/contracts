@@ -125,3 +125,45 @@ class UpdateAccountPreferencesResponse(_message.Message):
     primary_group: str
     favorite_groups: _containers.RepeatedScalarFieldContainer[str]
     def __init__(self, user_id: _Optional[str] = ..., email: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
+
+class BeginEmailChangeRequest(_message.Message):
+    __slots__ = ("user_id", "new_email", "reauth_proof")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    NEW_EMAIL_FIELD_NUMBER: _ClassVar[int]
+    REAUTH_PROOF_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    new_email: str
+    reauth_proof: str
+    def __init__(self, user_id: _Optional[str] = ..., new_email: _Optional[str] = ..., reauth_proof: _Optional[str] = ...) -> None: ...
+
+class BeginEmailChangeResponse(_message.Message):
+    __slots__ = ("retry_after_seconds", "expires_in_seconds")
+    RETRY_AFTER_SECONDS_FIELD_NUMBER: _ClassVar[int]
+    EXPIRES_IN_SECONDS_FIELD_NUMBER: _ClassVar[int]
+    retry_after_seconds: int
+    expires_in_seconds: int
+    def __init__(self, retry_after_seconds: _Optional[int] = ..., expires_in_seconds: _Optional[int] = ...) -> None: ...
+
+class ConfirmEmailChangeRequest(_message.Message):
+    __slots__ = ("user_id", "new_email", "code", "reauth_proof")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    NEW_EMAIL_FIELD_NUMBER: _ClassVar[int]
+    CODE_FIELD_NUMBER: _ClassVar[int]
+    REAUTH_PROOF_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    new_email: str
+    code: str
+    reauth_proof: str
+    def __init__(self, user_id: _Optional[str] = ..., new_email: _Optional[str] = ..., code: _Optional[str] = ..., reauth_proof: _Optional[str] = ...) -> None: ...
+
+class ConfirmEmailChangeResponse(_message.Message):
+    __slots__ = ("user_id", "email", "primary_group", "favorite_groups")
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    EMAIL_FIELD_NUMBER: _ClassVar[int]
+    PRIMARY_GROUP_FIELD_NUMBER: _ClassVar[int]
+    FAVORITE_GROUPS_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    email: str
+    primary_group: str
+    favorite_groups: _containers.RepeatedScalarFieldContainer[str]
+    def __init__(self, user_id: _Optional[str] = ..., email: _Optional[str] = ..., primary_group: _Optional[str] = ..., favorite_groups: _Optional[_Iterable[str]] = ...) -> None: ...
