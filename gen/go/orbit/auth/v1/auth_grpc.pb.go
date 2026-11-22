@@ -31,6 +31,8 @@ const (
 	AuthService_UnlinkIdentity_FullMethodName           = "/orbit.auth.v1.AuthService/UnlinkIdentity"
 	AuthService_GetAccount_FullMethodName               = "/orbit.auth.v1.AuthService/GetAccount"
 	AuthService_UpdateAccountPreferences_FullMethodName = "/orbit.auth.v1.AuthService/UpdateAccountPreferences"
+	AuthService_BeginEmailChange_FullMethodName         = "/orbit.auth.v1.AuthService/BeginEmailChange"
+	AuthService_ConfirmEmailChange_FullMethodName       = "/orbit.auth.v1.AuthService/ConfirmEmailChange"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -49,6 +51,8 @@ type AuthServiceClient interface {
 	UnlinkIdentity(ctx context.Context, in *UnlinkIdentityRequest, opts ...grpc.CallOption) (*UnlinkIdentityResponse, error)
 	GetAccount(ctx context.Context, in *GetAccountRequest, opts ...grpc.CallOption) (*GetAccountResponse, error)
 	UpdateAccountPreferences(ctx context.Context, in *UpdateAccountPreferencesRequest, opts ...grpc.CallOption) (*UpdateAccountPreferencesResponse, error)
+	BeginEmailChange(ctx context.Context, in *BeginEmailChangeRequest, opts ...grpc.CallOption) (*BeginEmailChangeResponse, error)
+	ConfirmEmailChange(ctx context.Context, in *ConfirmEmailChangeRequest, opts ...grpc.CallOption) (*ConfirmEmailChangeResponse, error)
 }
 
 type authServiceClient struct {
@@ -179,6 +183,26 @@ func (c *authServiceClient) UpdateAccountPreferences(ctx context.Context, in *Up
 	return out, nil
 }
 
+func (c *authServiceClient) BeginEmailChange(ctx context.Context, in *BeginEmailChangeRequest, opts ...grpc.CallOption) (*BeginEmailChangeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BeginEmailChangeResponse)
+	err := c.cc.Invoke(ctx, AuthService_BeginEmailChange_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) ConfirmEmailChange(ctx context.Context, in *ConfirmEmailChangeRequest, opts ...grpc.CallOption) (*ConfirmEmailChangeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConfirmEmailChangeResponse)
+	err := c.cc.Invoke(ctx, AuthService_ConfirmEmailChange_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -195,6 +219,8 @@ type AuthServiceServer interface {
 	UnlinkIdentity(context.Context, *UnlinkIdentityRequest) (*UnlinkIdentityResponse, error)
 	GetAccount(context.Context, *GetAccountRequest) (*GetAccountResponse, error)
 	UpdateAccountPreferences(context.Context, *UpdateAccountPreferencesRequest) (*UpdateAccountPreferencesResponse, error)
+	BeginEmailChange(context.Context, *BeginEmailChangeRequest) (*BeginEmailChangeResponse, error)
+	ConfirmEmailChange(context.Context, *ConfirmEmailChangeRequest) (*ConfirmEmailChangeResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -240,6 +266,12 @@ func (UnimplementedAuthServiceServer) GetAccount(context.Context, *GetAccountReq
 }
 func (UnimplementedAuthServiceServer) UpdateAccountPreferences(context.Context, *UpdateAccountPreferencesRequest) (*UpdateAccountPreferencesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountPreferences not implemented")
+}
+func (UnimplementedAuthServiceServer) BeginEmailChange(context.Context, *BeginEmailChangeRequest) (*BeginEmailChangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BeginEmailChange not implemented")
+}
+func (UnimplementedAuthServiceServer) ConfirmEmailChange(context.Context, *ConfirmEmailChangeRequest) (*ConfirmEmailChangeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfirmEmailChange not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -478,6 +510,42 @@ func _AuthService_UpdateAccountPreferences_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_BeginEmailChange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BeginEmailChangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).BeginEmailChange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_BeginEmailChange_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).BeginEmailChange(ctx, req.(*BeginEmailChangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_ConfirmEmailChange_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfirmEmailChangeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ConfirmEmailChange(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ConfirmEmailChange_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ConfirmEmailChange(ctx, req.(*ConfirmEmailChangeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -532,6 +600,14 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateAccountPreferences",
 			Handler:    _AuthService_UpdateAccountPreferences_Handler,
+		},
+		{
+			MethodName: "BeginEmailChange",
+			Handler:    _AuthService_BeginEmailChange_Handler,
+		},
+		{
+			MethodName: "ConfirmEmailChange",
+			Handler:    _AuthService_ConfirmEmailChange_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

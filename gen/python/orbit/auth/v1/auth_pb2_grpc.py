@@ -76,6 +76,16 @@ class AuthServiceStub(object):
                 request_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.SerializeToString,
                 response_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.FromString,
                 _registered_method=True)
+        self.BeginEmailChange = channel.unary_unary(
+                '/orbit.auth.v1.AuthService/BeginEmailChange',
+                request_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeRequest.SerializeToString,
+                response_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeResponse.FromString,
+                _registered_method=True)
+        self.ConfirmEmailChange = channel.unary_unary(
+                '/orbit.auth.v1.AuthService/ConfirmEmailChange',
+                request_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeRequest.SerializeToString,
+                response_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeResponse.FromString,
+                _registered_method=True)
 
 
 class AuthServiceServicer(object):
@@ -153,6 +163,18 @@ class AuthServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def BeginEmailChange(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ConfirmEmailChange(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -215,6 +237,16 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     servicer.UpdateAccountPreferences,
                     request_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.FromString,
                     response_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.SerializeToString,
+            ),
+            'BeginEmailChange': grpc.unary_unary_rpc_method_handler(
+                    servicer.BeginEmailChange,
+                    request_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeRequest.FromString,
+                    response_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeResponse.SerializeToString,
+            ),
+            'ConfirmEmailChange': grpc.unary_unary_rpc_method_handler(
+                    servicer.ConfirmEmailChange,
+                    request_deserializer=orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeRequest.FromString,
+                    response_serializer=orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -541,6 +573,60 @@ class AuthService(object):
             '/orbit.auth.v1.AuthService/UpdateAccountPreferences',
             orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesRequest.SerializeToString,
             orbit_dot_auth_dot_v1_dot_auth__pb2.UpdateAccountPreferencesResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def BeginEmailChange(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.auth.v1.AuthService/BeginEmailChange',
+            orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeRequest.SerializeToString,
+            orbit_dot_auth_dot_v1_dot_auth__pb2.BeginEmailChangeResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ConfirmEmailChange(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orbit.auth.v1.AuthService/ConfirmEmailChange',
+            orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeRequest.SerializeToString,
+            orbit_dot_auth_dot_v1_dot_auth__pb2.ConfirmEmailChangeResponse.FromString,
             options,
             channel_credentials,
             insecure,

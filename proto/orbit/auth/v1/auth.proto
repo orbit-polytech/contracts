@@ -24,6 +24,9 @@ service AuthService {
 
   rpc GetAccount(GetAccountRequest) returns (GetAccountResponse);
   rpc UpdateAccountPreferences(UpdateAccountPreferencesRequest) returns (UpdateAccountPreferencesResponse);
+
+  rpc BeginEmailChange(BeginEmailChangeRequest) returns (BeginEmailChangeResponse);
+  rpc ConfirmEmailChange(ConfirmEmailChangeRequest) returns (ConfirmEmailChangeResponse);
 }
 
 message SendCodeRequest {
@@ -90,6 +93,31 @@ message UpdateAccountPreferencesRequest {
 }
 
 message UpdateAccountPreferencesResponse {
+  string user_id = 1;
+  string email = 2;
+  string primary_group = 3;
+  repeated string favorite_groups = 4;
+}
+
+message BeginEmailChangeRequest {
+  string user_id = 1;
+  string new_email = 2;
+  string reauth_proof = 3;
+}
+
+message BeginEmailChangeResponse {
+  int32 retry_after_seconds = 1;
+  int32 expires_in_seconds = 2;
+}
+
+message ConfirmEmailChangeRequest {
+  string user_id = 1;
+  string new_email = 2;
+  string code = 3;
+  string reauth_proof = 4;
+}
+
+message ConfirmEmailChangeResponse {
   string user_id = 1;
   string email = 2;
   string primary_group = 3;
