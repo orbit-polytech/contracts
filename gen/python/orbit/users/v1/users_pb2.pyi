@@ -19,7 +19,7 @@ USER_ROLE_TEACHER: UserRole
 USER_ROLE_ADMIN: UserRole
 
 class UserProfile(_message.Message):
-    __slots__ = ("id", "account_id", "first_name", "last_name", "middle_name", "avatar_url", "academic_group", "course", "role", "created_at", "updated_at")
+    __slots__ = ("id", "account_id", "first_name", "last_name", "middle_name", "avatar_url", "academic_group", "course", "role", "created_at", "updated_at", "display_name", "username")
     ID_FIELD_NUMBER: _ClassVar[int]
     ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -31,6 +31,8 @@ class UserProfile(_message.Message):
     ROLE_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
     UPDATED_AT_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
     id: str
     account_id: str
     first_name: str
@@ -42,7 +44,9 @@ class UserProfile(_message.Message):
     role: UserRole
     created_at: _timestamp_pb2.Timestamp
     updated_at: _timestamp_pb2.Timestamp
-    def __init__(self, id: _Optional[str] = ..., account_id: _Optional[str] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., middle_name: _Optional[str] = ..., avatar_url: _Optional[str] = ..., academic_group: _Optional[str] = ..., course: _Optional[int] = ..., role: _Optional[_Union[UserRole, str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
+    display_name: str
+    username: str
+    def __init__(self, id: _Optional[str] = ..., account_id: _Optional[str] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., middle_name: _Optional[str] = ..., avatar_url: _Optional[str] = ..., academic_group: _Optional[str] = ..., course: _Optional[int] = ..., role: _Optional[_Union[UserRole, str]] = ..., created_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., updated_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., display_name: _Optional[str] = ..., username: _Optional[str] = ...) -> None: ...
 
 class GetProfileRequest(_message.Message):
     __slots__ = ("account_id",)
@@ -57,7 +61,7 @@ class GetProfileResponse(_message.Message):
     def __init__(self, profile: _Optional[_Union[UserProfile, _Mapping]] = ...) -> None: ...
 
 class UpdateProfileRequest(_message.Message):
-    __slots__ = ("account_id", "first_name", "last_name", "middle_name", "avatar_url", "academic_group", "course")
+    __slots__ = ("account_id", "first_name", "last_name", "middle_name", "avatar_url", "academic_group", "course", "display_name", "username")
     ACCOUNT_ID_FIELD_NUMBER: _ClassVar[int]
     FIRST_NAME_FIELD_NUMBER: _ClassVar[int]
     LAST_NAME_FIELD_NUMBER: _ClassVar[int]
@@ -65,6 +69,8 @@ class UpdateProfileRequest(_message.Message):
     AVATAR_URL_FIELD_NUMBER: _ClassVar[int]
     ACADEMIC_GROUP_FIELD_NUMBER: _ClassVar[int]
     COURSE_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
+    USERNAME_FIELD_NUMBER: _ClassVar[int]
     account_id: str
     first_name: str
     last_name: str
@@ -72,7 +78,9 @@ class UpdateProfileRequest(_message.Message):
     avatar_url: str
     academic_group: str
     course: int
-    def __init__(self, account_id: _Optional[str] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., middle_name: _Optional[str] = ..., avatar_url: _Optional[str] = ..., academic_group: _Optional[str] = ..., course: _Optional[int] = ...) -> None: ...
+    display_name: str
+    username: str
+    def __init__(self, account_id: _Optional[str] = ..., first_name: _Optional[str] = ..., last_name: _Optional[str] = ..., middle_name: _Optional[str] = ..., avatar_url: _Optional[str] = ..., academic_group: _Optional[str] = ..., course: _Optional[int] = ..., display_name: _Optional[str] = ..., username: _Optional[str] = ...) -> None: ...
 
 class UpdateProfileResponse(_message.Message):
     __slots__ = ("profile",)

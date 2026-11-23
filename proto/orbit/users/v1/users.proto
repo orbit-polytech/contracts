@@ -16,15 +16,17 @@ enum UserRole {
 message UserProfile {
   string id = 1;
   string account_id = 2;
-  string first_name = 3;
-  string last_name = 4;
-  string middle_name = 5;
+  string first_name = 3 [deprecated = true];
+  string last_name = 4 [deprecated = true];
+  string middle_name = 5 [deprecated = true];
   string avatar_url = 6;
   string academic_group = 7;
   optional int32 course = 8;
   UserRole role = 9;
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
+  string display_name = 12;
+  string username = 13;
 }
 
 message GetProfileRequest {
@@ -39,12 +41,14 @@ message GetProfileResponse {
 // Пустые необязательные строки и отсутствие course очищают значения.
 message UpdateProfileRequest {
   string account_id = 1;
-  string first_name = 2;
-  string last_name = 3;
-  string middle_name = 4;
+  string first_name = 2 [deprecated = true];
+  string last_name = 3 [deprecated = true];
+  string middle_name = 4 [deprecated = true];
   string avatar_url = 5;
   string academic_group = 6;
   optional int32 course = 7;
+  string display_name = 8;
+  string username = 9;
 }
 
 message UpdateProfileResponse {

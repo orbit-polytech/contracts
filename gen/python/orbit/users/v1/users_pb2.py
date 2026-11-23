@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1aorbit/users/v1/users.proto\x12\x0eorbit.users.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xab\x03\n\x0bUserProfile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n\naccount_id\x18\x02 \x01(\tR\taccountId\x12\x1d\n\nfirst_name\x18\x03 \x01(\tR\tfirstName\x12\x1b\n\tlast_name\x18\x04 \x01(\tR\x08lastName\x12\x1f\n\x0bmiddle_name\x18\x05 \x01(\tR\nmiddleName\x12\x1d\n\navatar_url\x18\x06 \x01(\tR\tavatarUrl\x12%\n\x0e\x61\x63\x61\x64\x65mic_group\x18\x07 \x01(\tR\racademicGroup\x12\x1b\n\x06\x63ourse\x18\x08 \x01(\x05H\x00R\x06\x63ourse\x88\x01\x01\x12,\n\x04role\x18\t \x01(\x0e\x32\x18.orbit.users.v1.UserRoleR\x04role\x12\x39\n\ncreated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAtB\t\n\x07_course\"2\n\x11GetProfileRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\"K\n\x12GetProfileResponse\x12\x35\n\x07profile\x18\x01 \x01(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x07profile\"\x80\x02\n\x14UpdateProfileRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\x12\x1d\n\nfirst_name\x18\x02 \x01(\tR\tfirstName\x12\x1b\n\tlast_name\x18\x03 \x01(\tR\x08lastName\x12\x1f\n\x0bmiddle_name\x18\x04 \x01(\tR\nmiddleName\x12\x1d\n\navatar_url\x18\x05 \x01(\tR\tavatarUrl\x12%\n\x0e\x61\x63\x61\x64\x65mic_group\x18\x06 \x01(\tR\racademicGroup\x12\x1b\n\x06\x63ourse\x18\x07 \x01(\x05H\x00R\x06\x63ourse\x88\x01\x01\x42\t\n\x07_course\"N\n\x15UpdateProfileResponse\x12\x35\n\x07profile\x18\x01 \x01(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x07profile\":\n\x17GetBatchProfilesRequest\x12\x1f\n\x0b\x61\x63\x63ount_ids\x18\x01 \x03(\tR\naccountIds\"S\n\x18GetBatchProfilesResponse\x12\x37\n\x08profiles\x18\x01 \x03(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x08profiles*h\n\x08UserRole\x12\x19\n\x15USER_ROLE_UNSPECIFIED\x10\x00\x12\x15\n\x11USER_ROLE_STUDENT\x10\x01\x12\x15\n\x11USER_ROLE_TEACHER\x10\x02\x12\x13\n\x0fUSER_ROLE_ADMIN\x10\x03\x32\xa7\x02\n\x0bUserService\x12S\n\nGetProfile\x12!.orbit.users.v1.GetProfileRequest\x1a\".orbit.users.v1.GetProfileResponse\x12\\\n\rUpdateProfile\x12$.orbit.users.v1.UpdateProfileRequest\x1a%.orbit.users.v1.UpdateProfileResponse\x12\x65\n\x10GetBatchProfiles\x12\'.orbit.users.v1.GetBatchProfilesRequest\x1a(.orbit.users.v1.GetBatchProfilesResponseBCZAgithub.com/orbit-polytech/contracts/gen/go/orbit/users/v1;usersv1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1aorbit/users/v1/users.proto\x12\x0eorbit.users.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xf6\x03\n\x0bUserProfile\x12\x0e\n\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n\naccount_id\x18\x02 \x01(\tR\taccountId\x12!\n\nfirst_name\x18\x03 \x01(\tB\x02\x18\x01R\tfirstName\x12\x1f\n\tlast_name\x18\x04 \x01(\tB\x02\x18\x01R\x08lastName\x12#\n\x0bmiddle_name\x18\x05 \x01(\tB\x02\x18\x01R\nmiddleName\x12\x1d\n\navatar_url\x18\x06 \x01(\tR\tavatarUrl\x12%\n\x0e\x61\x63\x61\x64\x65mic_group\x18\x07 \x01(\tR\racademicGroup\x12\x1b\n\x06\x63ourse\x18\x08 \x01(\x05H\x00R\x06\x63ourse\x88\x01\x01\x12,\n\x04role\x18\t \x01(\x0e\x32\x18.orbit.users.v1.UserRoleR\x04role\x12\x39\n\ncreated_at\x18\n \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x39\n\nupdated_at\x18\x0b \x01(\x0b\x32\x1a.google.protobuf.TimestampR\tupdatedAt\x12!\n\x0c\x64isplay_name\x18\x0c \x01(\tR\x0b\x64isplayName\x12\x1a\n\x08username\x18\r \x01(\tR\x08usernameB\t\n\x07_course\"2\n\x11GetProfileRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\"K\n\x12GetProfileResponse\x12\x35\n\x07profile\x18\x01 \x01(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x07profile\"\xcb\x02\n\x14UpdateProfileRequest\x12\x1d\n\naccount_id\x18\x01 \x01(\tR\taccountId\x12!\n\nfirst_name\x18\x02 \x01(\tB\x02\x18\x01R\tfirstName\x12\x1f\n\tlast_name\x18\x03 \x01(\tB\x02\x18\x01R\x08lastName\x12#\n\x0bmiddle_name\x18\x04 \x01(\tB\x02\x18\x01R\nmiddleName\x12\x1d\n\navatar_url\x18\x05 \x01(\tR\tavatarUrl\x12%\n\x0e\x61\x63\x61\x64\x65mic_group\x18\x06 \x01(\tR\racademicGroup\x12\x1b\n\x06\x63ourse\x18\x07 \x01(\x05H\x00R\x06\x63ourse\x88\x01\x01\x12!\n\x0c\x64isplay_name\x18\x08 \x01(\tR\x0b\x64isplayName\x12\x1a\n\x08username\x18\t \x01(\tR\x08usernameB\t\n\x07_course\"N\n\x15UpdateProfileResponse\x12\x35\n\x07profile\x18\x01 \x01(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x07profile\":\n\x17GetBatchProfilesRequest\x12\x1f\n\x0b\x61\x63\x63ount_ids\x18\x01 \x03(\tR\naccountIds\"S\n\x18GetBatchProfilesResponse\x12\x37\n\x08profiles\x18\x01 \x03(\x0b\x32\x1b.orbit.users.v1.UserProfileR\x08profiles*h\n\x08UserRole\x12\x19\n\x15USER_ROLE_UNSPECIFIED\x10\x00\x12\x15\n\x11USER_ROLE_STUDENT\x10\x01\x12\x15\n\x11USER_ROLE_TEACHER\x10\x02\x12\x13\n\x0fUSER_ROLE_ADMIN\x10\x03\x32\xa7\x02\n\x0bUserService\x12S\n\nGetProfile\x12!.orbit.users.v1.GetProfileRequest\x1a\".orbit.users.v1.GetProfileResponse\x12\\\n\rUpdateProfile\x12$.orbit.users.v1.UpdateProfileRequest\x1a%.orbit.users.v1.UpdateProfileResponse\x12\x65\n\x10GetBatchProfiles\x12\'.orbit.users.v1.GetBatchProfilesRequest\x1a(.orbit.users.v1.GetBatchProfilesResponseBCZAgithub.com/orbit-polytech/contracts/gen/go/orbit/users/v1;usersv1b\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -33,22 +33,34 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'orbit.users.v1.users_pb2', 
 if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._loaded_options = None
   _globals['DESCRIPTOR']._serialized_options = b'ZAgithub.com/orbit-polytech/contracts/gen/go/orbit/users/v1;usersv1'
-  _globals['_USERROLE']._serialized_start=1122
-  _globals['_USERROLE']._serialized_end=1226
+  _globals['_USERPROFILE'].fields_by_name['first_name']._loaded_options = None
+  _globals['_USERPROFILE'].fields_by_name['first_name']._serialized_options = b'\030\001'
+  _globals['_USERPROFILE'].fields_by_name['last_name']._loaded_options = None
+  _globals['_USERPROFILE'].fields_by_name['last_name']._serialized_options = b'\030\001'
+  _globals['_USERPROFILE'].fields_by_name['middle_name']._loaded_options = None
+  _globals['_USERPROFILE'].fields_by_name['middle_name']._serialized_options = b'\030\001'
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['first_name']._loaded_options = None
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['first_name']._serialized_options = b'\030\001'
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['last_name']._loaded_options = None
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['last_name']._serialized_options = b'\030\001'
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['middle_name']._loaded_options = None
+  _globals['_UPDATEPROFILEREQUEST'].fields_by_name['middle_name']._serialized_options = b'\030\001'
+  _globals['_USERROLE']._serialized_start=1272
+  _globals['_USERROLE']._serialized_end=1376
   _globals['_USERPROFILE']._serialized_start=80
-  _globals['_USERPROFILE']._serialized_end=507
-  _globals['_GETPROFILEREQUEST']._serialized_start=509
-  _globals['_GETPROFILEREQUEST']._serialized_end=559
-  _globals['_GETPROFILERESPONSE']._serialized_start=561
-  _globals['_GETPROFILERESPONSE']._serialized_end=636
-  _globals['_UPDATEPROFILEREQUEST']._serialized_start=639
-  _globals['_UPDATEPROFILEREQUEST']._serialized_end=895
-  _globals['_UPDATEPROFILERESPONSE']._serialized_start=897
-  _globals['_UPDATEPROFILERESPONSE']._serialized_end=975
-  _globals['_GETBATCHPROFILESREQUEST']._serialized_start=977
-  _globals['_GETBATCHPROFILESREQUEST']._serialized_end=1035
-  _globals['_GETBATCHPROFILESRESPONSE']._serialized_start=1037
-  _globals['_GETBATCHPROFILESRESPONSE']._serialized_end=1120
-  _globals['_USERSERVICE']._serialized_start=1229
-  _globals['_USERSERVICE']._serialized_end=1524
+  _globals['_USERPROFILE']._serialized_end=582
+  _globals['_GETPROFILEREQUEST']._serialized_start=584
+  _globals['_GETPROFILEREQUEST']._serialized_end=634
+  _globals['_GETPROFILERESPONSE']._serialized_start=636
+  _globals['_GETPROFILERESPONSE']._serialized_end=711
+  _globals['_UPDATEPROFILEREQUEST']._serialized_start=714
+  _globals['_UPDATEPROFILEREQUEST']._serialized_end=1045
+  _globals['_UPDATEPROFILERESPONSE']._serialized_start=1047
+  _globals['_UPDATEPROFILERESPONSE']._serialized_end=1125
+  _globals['_GETBATCHPROFILESREQUEST']._serialized_start=1127
+  _globals['_GETBATCHPROFILESREQUEST']._serialized_end=1185
+  _globals['_GETBATCHPROFILESRESPONSE']._serialized_start=1187
+  _globals['_GETBATCHPROFILESRESPONSE']._serialized_end=1270
+  _globals['_USERSERVICE']._serialized_start=1379
+  _globals['_USERSERVICE']._serialized_end=1674
 # @@protoc_insertion_point(module_scope)
